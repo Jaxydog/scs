@@ -8,4 +8,9 @@
 --- | cc.peripheral.Peripheral.Generic.EnergyStorage A generic energy storage peripheral.
 --- | cc.peripheral.Peripheral.Command A command block peripheral.
 --- | cc.peripheral.Peripheral.Computer A computer peripheral.
+--- | cc.peripheral.Peripheral.Drive A disk drive peripheral.
+--- | cc.peripheral.Peripheral.Modem A modem peripheral.
+--- | cc.peripheral.Peripheral.Monitor A monitor peripheral.
+--- | cc.peripheral.Peripheral.Printer A printer peripheral.
+--- | cc.peripheral.Peripheral.Speaker A speaker peripheral.
 --- | table An unknown peripheral type.
