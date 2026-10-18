@@ -1,0 +1,36 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/rednet_message.html)
+---
+--- The `rednet_message` event is fired when a message is sent over Rednet.
+---
+--- This event is usually handled by `rednet.receive`, but it can also be pulled manually.
+---
+--- `rednet_message` events are sent by `rednet.run` in the top-level coroutine in response to `modem_message` events.
+--- A `rednet_message` event is always preceded by a `modem_message` event.
+--- They are generated inside CraftOS rather than being sent by the ComputerCraft machine.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `integer`: The ID of the sending computer.
+--- 3. `unknown`: The message sent.
+--- 4. `string?`: The protocol of the message, if provided.
+---
+--- # Usage
+---
+--- - Print a message when one is sent.
+---
+--- ```lua
+--- while true do
+---     local _, sender, message, protocol = os.pullEvent('rednet_message')
+---
+---     if protocol == nil then
+---         print('Received message from', sender, 'with message', tostring(message))
+---     else
+---         print('Received message from', sender, 'with protocol', protocol, 'and message', tostring(message))
+---     end
+--- end
+--- ```
+---
+--- @alias cc.os.Event.RednetMessage 'rednet_message'

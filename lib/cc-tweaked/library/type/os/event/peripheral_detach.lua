@@ -1,0 +1,24 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/peripheral_detach.html)
+---
+--- The `peripheral_detach` event is fired when a peripheral is detached from a side or from a modem.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `cc.peripheral.Name`: The side or network ID of the peripheral.
+---
+--- # Usage
+---
+--- - Print a message when a peripheral is detached.
+---
+--- ```lua
+--- while true do
+---     local _, name = os.pullEvent('peripheral_detach')
+---
+---     print('Peripheral', name, 'was detached')
+--- end
+--- ```
+---
+--- @alias cc.os.Event.PeripheralDetach 'peripheral_detach'

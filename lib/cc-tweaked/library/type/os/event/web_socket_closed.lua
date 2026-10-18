@@ -1,0 +1,33 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/websocket_closed.html)
+---
+--- The `websocket_closed` event is fired when an open WebSocket connection is closed.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `string`: The URL of the WebSocket that was closed.
+--- 3. `string?`: The server-provided reason the WebSocket was closed.
+---     This will be `nil` if the connection was closed abnormally.
+--- 4. `integer?`: The connection close code, indicating why the socket was closed.
+---     This will be `nil` if the connection was closed abnormally.
+---
+--- # Usage
+---
+--- - Print a message when a WebSocket is closed.
+---
+--- ```lua
+--- local myUrl = 'wss://example.tweaked.cc/echo'
+--- local ws = http.websocket(myUrl)
+---
+--- local event, url
+---
+--- repeat
+---     event, url = os.pullEvent('websocket_closed')
+--- until url == myUrl
+---
+--- print('The WebSocket at', url, 'was closed')
+--- ```
+---
+--- @alias cc.os.Event.WebSocketClosed 'websocket_closed'

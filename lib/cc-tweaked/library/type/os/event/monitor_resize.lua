@@ -1,0 +1,24 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/monitor_resize.html)
+---
+--- The `monitor_resize` event is fired when an adjacent or networked monitor's size is changed.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `cc.peripheral.Name`: The side or network ID of the monitor that was resized.
+---
+--- # Usage
+---
+--- - Print a message when a monitor is resized.
+---
+--- ```lua
+--- while true do
+---     local _, name = os.pullEvent('monitor_resize')
+---
+---     print('Monitor', name, 'was resized')
+--- end
+--- ```
+---
+--- @alias cc.os.Event.MonitorResize 'monitor_resize'

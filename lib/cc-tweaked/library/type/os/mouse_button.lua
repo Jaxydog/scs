@@ -1,0 +1,11 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/mouse_click.html)
+---
+--- Several mouse events (`mouse_click`, `mouse_up`, `mouse_drag`) contain a 'mouse button' code.
+--- This takes a numerical value depending on which button on your mouse was last pressed when this event occurred.
+---
+--- @alias cc.os.MouseButton
+--- | 1 The left button.
+--- | 2 The right button.
+--- | 3 The middle button.

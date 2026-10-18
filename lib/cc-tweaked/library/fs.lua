@@ -1,0 +1,488 @@
+--- [Official Documentation](https://tweaked.cc/module/fs.html)
+---
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html)
+---
+--- Interact with the computer's files and filesystem, allowing you to manipulate files,
+--- directories, and paths. This includes:
+---
+--- - Reading and writing files:
+---   Call open to obtain a file "handle", which can be used to read from or write to a file.
+---
+--- - Path manipulation:
+---   `combine`, `getName` and `getDir` allow you to manipulate file paths,
+---   joining them together or extracting components.
+---
+--- - Querying paths:
+---   For instance, checking if a file exists, or whether it's a directory.
+---   See `getSize`, `exists`, `isDir`, `isReadOnly` and attributes.
+---
+--- - File and directory manipulation:
+---   For instance, moving or copying files.
+---   See makeDir, `move`, `copy` and `delete`.
+---
+--- > [!NOTE]
+--- > All functions in the API work on absolute paths, and do not take the current directory into account.
+--- > You can use `shell.resolve` to convert a relative path into an absolute one.
+---
+--- ## Mounts
+---
+--- While a computer can only have one hard drive and filesystem, other filesystems may be "mounted" inside it.
+--- For instance, the drive peripheral mounts its disk's contents at `'disk/'`, `'disk1/'`, etc.
+---
+--- You can see which mount a path belongs to with the `getDrive` function.
+--- This returns `'hdd'` for the computer's main filesystem (`'/'`), `'rom'` for the ROM (`'rom/'`).
+---
+--- Most filesystems have a limited capacity, operations which would cause that capacity to be reached
+--- (such as writing an incredibly large file) will fail.
+--- You can see a mount's capacity with `getCapacity` and the remaining space with `getFreeSpace`.
+fs = {}
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:complete)
+---
+--- Provides completion for a file or directory name, suitable for use with `_G.read`.
+---
+--- When a directory is a possible candidate for completion, two entries are included:
+---
+--- - One with a trailing slash (indicating that entries within this directory exist).
+---
+--- - One without it (meaning this entry is an immediate completion candidate).
+---
+--- `include_dirs` can be set to `false` to only include those with a trailing slash.
+---
+--- # Usage
+---
+--- - Complete files in the root directory.
+---
+--- ```lua
+--- read(nil, nil, function(str)
+---     return fs.complete(str, '', true, false)
+--- end)
+--- ```
+---
+--- - Complete files in the root directory, hiding hidden files by default.
+---
+--- ```lua
+--- read(nil, nil, function(str)
+---     return fs.complete(str, '', {
+---         include_files = true,
+---         include_dirs = false,
+---         include_hidden = false,
+---     })
+--- end)
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.74
+--- - Changed in version 1.101.0: Added the alternative table-based function definition.
+---
+--- @overload fun(path: string, location: string, options: cc.fs.CompleteOptions): string[]
+---
+--- @param path string The path to complete.
+--- @param location string The location where paths are resolved from.
+--- @param include_files? boolean When `false`, only directories will be included in the list (default `true`).
+--- @param include_dirs? boolean When `false`, "raw" directories will not be included in the list (default `true`).
+---
+--- @return string[] paths A list of possible completion candidates.
+function fs.complete(path, location, include_files, include_dirs) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:find)
+---
+--- Searches for files matching a string with wildcards.
+---
+--- This string looks like a normal path string, but can include wildcards, which can match multiple paths:
+---
+--- - `?` matches any single character in a filename.
+--- - `*` matches any number of characters.
+---
+--- For example, `rom/*/command*` will look for any path starting with command inside any subdirectory of `/rom`.
+---
+--- Note that these wildcards match a single segment of the path.
+--- For instance `rom/*.lua` will include `rom/startup.lua` but not include `rom/programs/list.lua`.
+---
+--- # Throws
+---
+--- - If the supplied path was invalid.
+---
+--- # Usage
+---
+--- - List all Markdown files in the `help` directory.
+---
+--- ```lua
+--- fs.find('rom/help/*.md')
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.6
+--- - Changed in version 1.106.0: Added support for the `?` wildcard.
+---
+--- @param path string The wildcard-qualified path to search for.
+---
+--- @return string[] paths A list of paths that match the search string.
+function fs.find(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:isDriveRoot)
+---
+--- Returns true if a path is mounted to the parent filesystem.
+---
+--- The root filesystem `'/'` is considered a mount, along with disk folders and the `rom` folder.
+---
+--- # Throws
+---
+--- - If the path does not exist.
+---
+--- # Changes
+---
+--- - New in version 1.87.0
+---
+--- @param path string The path to check.
+---
+--- @return boolean mounted If the path is mounted, rather than a normal file / directory.
+---
+--- @see fs.getDrive()
+function fs.isDriveRoot(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:list)
+---
+--- Returns a list of files in a directory.
+---
+--- # Throws
+---
+--- - If the path does not exist.
+---
+--- # Usage
+---
+--- - List all files under `/rom/`.
+---
+--- ```lua
+--- local files = fs.list('/rom/')
+---
+--- for i = 1, #files do
+---     print(files[i])
+--- end
+--- ```
+---
+--- @param path string The path to list.
+---
+--- @return string[] files A table with a list of files in the directory.
+function fs.list(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:combine)
+---
+--- Combines several parts of a path into one full path, adding separators as needed.
+---
+--- # Throws
+---
+--- - On argument errors.
+---
+--- # Usage
+---
+--- - Combine several file paths together.
+---
+--- # Changes
+---
+--- - Changed in version 1.95.0: Now supports multiple arguments.
+---
+--- ```lua
+--- fs.combine('/rom/programs', '../apis', 'parallel.lua')
+--- -- => 'rom/apis/parallel.lua'
+--- ```
+---
+--- @param path string The first part of the path. For example, a parent directory path.
+--- @param ... string Additional parts of the path to combine.
+---
+--- @return string combined The new path, with separators added between parts as needed.
+function fs.combine(path, ...) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:getName)
+---
+--- Returns the filename portion of a path.
+---
+--- # Usage
+---
+--- - Get the filename of `rom/startup.lua`
+---
+--- ```lua
+--- fs.getName('rom/startup.lua')
+--- -- => 'startup.lua'
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.2
+---
+--- @param path string The path to get the name from.
+---
+--- @return string name The final part of the path (the filename).
+function fs.getName(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:getDir)
+---
+--- Returns the parent directory portion of a path.
+---
+--- # Usage
+---
+--- - Get the directory name of `rom/startup.lua`.
+---
+--- ```lua
+--- fs.getDir('rom/startup.lua')
+--- -- => 'rom'
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.63
+---
+--- @param path string The path to get the directory from.
+---
+--- @return string parent The path with the final part removed (the parent directory).
+function fs.getDir(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:getSize)
+---
+--- Returns the size of the specified file.
+---
+--- # Throws
+---
+--- - If the path doesn't exist.
+---
+--- # Changes
+---
+--- - New in version 1.3
+---
+--- @param path string The file to get the file size of.
+---
+--- @return integer size The size of the file, in bytes.
+function fs.getSize(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:exists)
+---
+--- Returns whether the specified path exists.
+---
+--- @param path string The path to check the existence of.
+---
+--- @return boolean exists Whether the path exists.
+function fs.exists(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:isDir)
+---
+--- Returns whether the specified path is a directory.
+---
+--- @param path string The path to check.
+---
+--- @return boolean result Whether the path is a directory.
+function fs.isDir(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:isReadOnly)
+---
+--- Returns whether a path is read-only.
+---
+--- @param path string The path to check.
+---
+--- @return boolean result Whether the path cannot be written to.
+function fs.isReadOnly(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:makeDir)
+---
+--- Creates a directory, and any missing parents, at the specified path.
+---
+--- # Throws
+---
+--- - If the directory couldn't be created.
+---
+--- @param path string The path to the directory to create.
+function fs.makeDir(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:move)
+---
+--- Moves a file or directory from one path to another.
+---
+--- Any parent directories are created as needed.
+---
+--- # Throws
+---
+--- - If the file or directory couldn't be moved.
+---
+--- @param path string The current file or directory to move from.
+--- @param dest string The destination path for the file or directory.
+function fs.move(path, dest) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:copy)
+---
+--- Copies a file or directory to a new path.
+---
+--- Any parent directories are created as needed.
+---
+--- # Throws
+---
+--- - If the file or directory couldn't be copied.
+---
+--- @param path string The current file or directory to copy.
+--- @param dest string The destination path for the file or directory.
+function fs.copy(path, dest) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:delete)
+---
+--- Deletes a file or directory.
+---
+--- If the path points to a directory, all enclosed files and subdirectories are also deleted.
+---
+--- # Throws
+---
+--- - If the file or directory couldn't be deleted.
+---
+--- @param path string The path ot the file or directory to delete.
+function fs.delete(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:open)
+---
+--- Opens a file for reading or writing at a path.
+---
+--- # Throws
+---
+--- - If an invalid mode was specified.
+---
+--- # Usage
+---
+--- - Read the contents of a file.
+---
+--- ```lua
+--- local file = fs.open('/rom/help/intro.txt', 'r')
+--- local data = file.readAll()
+--- file.close()
+---
+--- print(data)
+--- ```
+---
+--- - Open a file and read all lines into a table. `io.lines` offers an alternative way to do this.
+---
+--- ```lua
+--- local file = fs.open('/rom/motd.txt', 'r')
+--- local lines = {}
+---
+--- while true do
+---     local line = file.readLine()
+---
+---     -- If this is `nil`, we've reached EOF.
+---     if not line then break end
+---
+---     lines[#lines + 1] = line
+--- end
+---
+--- file.close()
+---
+--- print(lines[math.random(#lines)]) -- Pick a random line and print it.
+--- ```
+---
+--- - Open a file and write some text to it. You can run `edit out.txt` to see the written text.
+---
+--- ```lua
+--- local file = fs.open('out.txt', 'w')
+---
+--- file.write('Just testing some code')
+---
+--- file.close() -- Remember to call close, otherwise changes may not be written.
+--- ```
+---
+--- @overload fun(path: string, mode: cc.fs.OpenMode.ReadOnly): cc.fs.ReadHandle
+--- @overload fun(path: string, mode: cc.fs.OpenMode.WriteOnly): cc.fs.WriteHandle
+--- @overload fun(path: string, mode: cc.fs.OpenMode.ReadWriteOnly): cc.fs.ReadWriteHandle
+---
+--- @param path string The path to the file to open.
+--- @param mode cc.fs.OpenMode The mode to open the file with.
+---
+--- @return cc.fs.ReadHandle | cc.fs.WriteHandle | cc.fs.ReadWriteHandle file A file handle object for the file.
+function fs.open(path, mode) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:getDrive)
+---
+--- Returns the name of the mount that the specified path is located on.
+---
+--- # Throws
+---
+--- - If the path doesn't exist.
+---
+--- # Usage
+---
+--- - Print the drives of a couple of mounts.
+---
+--- ```lua
+--- print('/: ' .. fs.getDrive('/'))
+--- -- => '/: hdd'
+--- print('/rom/: ' .. fs.getDrive('rom'))
+--- -- => '/rom/: rom'
+--- ```
+---
+--- @param path string The path to get the drive of.
+---
+--- @return string? name The name of the drive that the file is on; e.g., `hdd` for local files or `rom` for ROM files.
+function fs.getDrive(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:getFreeSpace)
+---
+--- Returns the amount of free space available on the drive the path is located on.
+---
+--- # Throws
+---
+--- - If the path doesn't exist.
+---
+--- # Changes
+---
+--- - New in version 1.4
+---
+--- @param path string The path to check the free space for.
+---
+--- @return integer | 'unlimited' space The amount of free space available, in `bytes`, or `'unlimited'`.
+---
+--- @see fs.getCapacity()
+function fs.getFreeSpace(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:getCapacity)
+---
+--- Returns the capacity of the drive the path is located on.
+---
+--- # Throws
+---
+--- - If the capacity cannot be determined.
+---
+--- # Changes
+---
+--- - New in version 1.87.0
+---
+--- @param path string The path of the drive to get.
+---
+--- @return integer? The drive's capacity. This will be `nil` for 'read-only' drives, such as the ROM.
+---
+--- @see fs.getFreeSpace()
+function fs.getCapacity(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:attributes)
+---
+--- Get attributes about a specific file or folder.
+---
+--- The returned attributes table contains information about the size of the file, whether it is a directory,
+--- when it was created and last modified, and whether it is read-only.
+---
+--- The creation and modification times are given as the number of milliseconds since the UNIX epoch.
+--- This may be given to `os.date` in order to convert it to more usable form.
+---
+--- # Throws
+---
+--- - If the path doesn't exist.
+---
+--- # Changes
+---
+--- - New in version 1.87.0
+--- - Changed in version 1.91.0: Renamed `modification` field to `modified`.
+--- - Changed in version 1.95.2: Added `isReadOnly` to attributes.
+---
+--- @param path string The path to get attributes for.
+---
+--- @return cc.fs.Attributes attributes The resulting attributes.
+---
+--- @see fs.getSize()
+--- @see fs.isDir()
+function fs.attributes(path) end

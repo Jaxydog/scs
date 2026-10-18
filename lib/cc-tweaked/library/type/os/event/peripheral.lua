@@ -1,0 +1,24 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/peripheral.html)
+---
+--- The peripheral event is fired when a peripheral is attached on a side or to a modem.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `cc.peripheral.Name`: The side or network ID of the peripheral.
+---
+--- # Usage
+---
+--- - Print a message when a peripheral is attached.
+---
+--- ```lua
+--- while true do
+---     local _, name = os.pullEvent('peripheral')
+---
+---     print('Peripheral', name, 'was attached')
+--- end
+--- ```
+---
+--- @alias cc.os.Event.Peripheral 'peripheral'

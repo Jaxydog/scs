@@ -1,0 +1,41 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/)
+---
+--- The name of a possible event.
+---
+--- @alias cc.os.Event
+--- | cc.os.Event.Alarm The `alarm` event.
+--- | cc.os.Event.Char The `char` event.
+--- | cc.os.Event.ComputerCommand The `computer_command` event.
+--- | cc.os.Event.Disk The `disk` event.
+--- | cc.os.Event.DiskEject The `disk_eject` event.
+--- | cc.os.Event.FileTransfer The `file_transfer` event.
+--- | cc.os.Event.HttpCheck The `http_check` event.
+--- | cc.os.Event.HttpFailure The `http_failure` event.
+--- | cc.os.Event.HttpSuccess The `http_success` event.
+--- | cc.os.Event.Key The `key` event.
+--- | cc.os.Event.KeyUp The `key_up` event.
+--- | cc.os.Event.ModemMessage The `modem_message` event.
+--- | cc.os.Event.MonitorResize The `monitor_resize` event.
+--- | cc.os.Event.MonitorTouch The `monitor_touch` event.
+--- | cc.os.Event.MouseClick The `mouse_click` event.
+--- | cc.os.Event.MouseDrag The `mouse_drag` event.
+--- | cc.os.Event.MouseScroll The `mouse_scroll` event.
+--- | cc.os.Event.MouseUp The `mouse_up` event.
+--- | cc.os.Event.Paste The `paste` event.
+--- | cc.os.Event.Peripheral The `peripheral` event.
+--- | cc.os.Event.PeripheralDetach The `peripheral_detach` event.
+--- | cc.os.Event.RednetMessage The `rednet_message` event.
+--- | cc.os.Event.Redstone The `redstone` event.
+--- | cc.os.Event.SettingChanged The `setting_changed` event.
+--- | cc.os.Event.SpeakerAudioEmpty The `speaker_audio_empty` event.
+--- | cc.os.Event.TaskComplete The `task_complete` event.
+--- | cc.os.Event.Terminate The `terminate` event.
+--- | cc.os.Event.Timer The `timer` event.
+--- | cc.os.Event.TurtleInventory The `turtle_inventory` event.
+--- | cc.os.Event.WebSocketClosed The `websocket_closed` event.
+--- | cc.os.Event.WebSocketFailure The `websocket_failure` event.
+--- | cc.os.Event.WebSocketMessage The `websocket_message` event.
+--- | cc.os.Event.WebSocketSuccess The `websocket_success` event.
+--- | string An unknown event type.

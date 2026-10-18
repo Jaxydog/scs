@@ -1,0 +1,13 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/peripheral.html)
+---
+--- A possible computer side.
+---
+--- @alias cc.peripheral.Side
+--- | 'top'
+--- | 'bottom'
+--- | 'left'
+--- | 'right'
+--- | 'front'
+--- | 'back'

@@ -1,0 +1,37 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/terminate.html)
+---
+--- The terminate event is fired when `Ctrl-T` is held down.
+---
+--- This event is normally handled by `os.pullEvent`, and will not be returned.
+--- However, `os.pullEventRaw` will return this event when fired.
+---
+--- `terminate` will be sent even when a filter is provided to `os.pullEventRaw`.
+--- When using `os.pullEventRaw` with a filter, make sure to check that the event is not `terminate`.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+---
+--- # Usage
+---
+--- - Print a message when `Ctrl-T` is held.
+---
+--- ```lua
+--- while true do
+---     os.pullEventRaw('terminate')
+---
+---     print('Terminate requested')
+--- end
+--- ```
+---
+--- - Exit when `Ctrl-T` is held.
+---
+--- ```lua
+--- while true do
+---     os.pullEvent()
+--- end
+--- ```
+---
+--- @alias cc.os.Event.Terminate 'terminate'

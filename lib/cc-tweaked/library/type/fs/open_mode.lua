@@ -1,0 +1,48 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:open)
+---
+--- A mode string that always corresponds to a `cc.fs.ReadHandle`.
+---
+--- @alias cc.fs.OpenMode.ReadOnly
+--- | 'r' Read mode.
+--- | 'rb' Read mode (bytes).
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:open)
+---
+--- A mode string that always corresponds to a `cc.fs.WriteHandle`.
+---
+--- @alias cc.fs.OpenMode.WriteOnly
+--- | 'w' Write mode.
+--- | 'wb' Write mode (bytes).
+--- | 'a' Append mode.
+--- | 'ab' Append mode (bytes).
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:open)
+---
+--- A mode string that always corresponds to a `cc.fs.ReadWriteHandle`.
+---
+--- @alias cc.fs.OpenMode.ReadWriteOnly
+--- | 'r+' Update mode, data preserved.
+--- | 'r+b' Update mode, data preserved (bytes).
+--- | 'w+' Update mode, data erased.
+--- | 'w+b' Update mode, data erased (bytes).
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:open)
+---
+--- The mode string can be any of the following:
+---
+--- - `r`: Read mode.
+--- - `w`: Write mode.
+--- - `a`: Append mode.
+--- - `r+`: Update mode (allows reading and writing), all data is preserved.
+--- - `w+`: Update mode, all data is erased.
+---
+--- The mode may also have a `b` at the end, which opens the file in 'binary mode'.
+--- This changes `fs.ReadHandle.read` and `fs.WriteHandle.write` to read/write single bytes
+--- as numbers rather than strings.
+---
+--- @alias cc.fs.OpenMode
+--- | cc.fs.OpenMode.ReadOnly Read-only modes.
+--- | cc.fs.OpenMode.WriteOnly Write-only modes.
+--- | cc.fs.OpenMode.ReadWriteOnly Read-write-only modes.

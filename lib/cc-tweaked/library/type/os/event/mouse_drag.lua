@@ -1,0 +1,27 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/mouse_drag.html)
+---
+--- This event is fired every time the mouse is moved while a mouse button is being held.
+--- This event is only fired on advanced computers (including advanced turtles and pocket computers).
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `cc.os.MouseButton`: The mouse button that is being pressed.
+--- 3. `integer`: The X-coordinate of the click.
+--- 4. `integer`: The Y-coordinate of the click.
+---
+--- # Usage
+---
+--- - Print the button and the coordinates whenever the mouse is dragged.
+---
+--- ```lua
+--- while true do
+---     local _, button, x, y = os.pullEvent('mouse_drag')
+---
+---     print(('The mouse button %d was dragged at %d, %d'):format(button, x, y))
+--- end
+--- ```
+---
+--- @alias cc.os.Event.MouseDrag 'mouse_drag'

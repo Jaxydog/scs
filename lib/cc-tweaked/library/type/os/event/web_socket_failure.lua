@@ -1,0 +1,33 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/websocket_failure.html)
+---
+--- The `websocket_failure` event is fired when a WebSocket connection request fails.
+---
+--- This event is normally handled inside `http.websocket`, but it can still be seen when using `http.websocketAsync`.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `string`: The URL of the WebSocket.
+--- 3. `string`: An error describing the failure.
+---
+--- # Usage
+---
+--- - Print an error describing why the website cannot be contacted.
+---
+--- ```lua
+--- local myUrl = 'wss://example.tweaked.cc/echo'
+---
+--- http.websocketAsync(myUrl)
+---
+--- local event, url, err
+---
+--- repeat
+---     event, url, err = os.pullEvent('websocket_failure')
+--- until url == myUrl
+---
+--- print('The WebSocket at', url, 'could not be reached:', err)
+--- ```
+---
+--- @alias cc.os.Event.WebSocketFailure 'websocket_failure'

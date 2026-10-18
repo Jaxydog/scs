@@ -1,0 +1,11 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/http.html#v:websocket)
+---
+--- @class cc.http.WebSocketRequest
+---
+--- @field url string The WebSocket URL to connect to. This should have the `ws://` or `wss://` protocol.
+---
+--- @field headers? table<string, string> Additional headers to send as part of the initial WebSocket connection.
+---
+--- @field timeout? number The connection timeout in seconds.

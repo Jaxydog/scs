@@ -1,0 +1,140 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/peripheral/speaker.html)
+---
+--- The speaker peripheral allows your computer to play notes and other sounds.
+---
+--- The speaker can play three kinds of sound, in increasing orders of complexity:
+---
+--- - `playNote` allows you to play noteblock note.
+--- - `playSound` plays any Minecraft sound, such as block sounds or mob noises.
+--- - `playAudio` can play arbitrary audio.
+---
+--- # Changes
+---
+--- - New in version 1.80pr1
+---
+--- @class cc.peripheral.Peripheral.Speaker
+local Speaker = {}
+
+--- [Official Documentation](https://tweaked.cc/peripheral/speaker.html#v:playNote)
+---
+--- Plays a note block note through the speaker.
+---
+--- This takes the name of a note to play, as well as optionally the volume and pitch to play the note at.
+---
+--- The pitch argument uses semitones as the unit. This directly maps to the number of clicks on a note block.
+--- For reference, 0, 12, and 24 map to F#, and 6 and 18 map to C.
+---
+--- A maximum of 8 notes can be played in a single tick. If this limit is hit, this function will return `false`.
+---
+--- ## Valid instruments
+---
+--- The speaker supports all of Minecraft's noteblock instruments. These are:
+--- `'harp'`, `'basedrum'`, `'snare'`, `'hat'`, `'bass'`, `'flute'`, `'bell'`, `'guitar'`, `'chime'`, `'xylophone'`,
+--- `'iron_xylophone'`, `'cow_bell'`, `'didgeridoo'`, `'bit'`, `'banjo'`, and `'pling'`.
+---
+--- # Throws
+---
+--- - If the instrument does not exist.
+---
+--- @param instrument cc.peripheral.Peripheral.Speaker.Instrument The instrument to use to play this note.
+--- @param volume? number The volume to play the note at, from 0.0 to 3.0. Defaults to 1.0.
+--- @param pitch? number The pitch to play the note at in semitones, from 0 to 24. Defaults to 12.
+---
+--- @return boolean played Whether the note could be played as the limit was not reached.
+function Speaker.playNote(instrument, volume, pitch) end
+
+--- [Official Documentation](https://tweaked.cc/peripheral/speaker.html#v:playSound)
+---
+--- Plays a Minecraft sound through the speaker.
+---
+--- This takes the name of a vanilla Minecraft or modded sound, such as `"minecraft:block.note_block.harp"`,
+--- as well as an optional volume and pitch.
+---
+--- Only one sound can be played at once.
+--- This function will return `false` if another sound was started this tick, or if some audio is still playing.
+---
+--- # Throws
+---
+--- - If the sound name was invalid.
+---
+--- # Usage
+---
+--- - Play a creeper hiss sound with the speaker.
+---
+--- ```lua
+--- local speaker = peripheral.find('speaker')
+---
+--- speaker.playSound('entity.creeper.primed')
+--- ```
+---
+--- @param name string The name of the sound to play.
+--- @param volume? number The volume to play the sound at, from 0.0 to 3.0. Defaults to 1.0.
+--- @param pitch? number The speed to play the sound at, from 0.5 to 2.0. Defaults to 1.0.
+---
+--- @return boolean played Whether the sound could be played.
+function Speaker.playSound(name, volume, pitch) end
+
+--- [Official Documentation](https://tweaked.cc/peripheral/speaker.html#v:playAudio)
+---
+--- Attempt to stream some audio data to the speaker.
+---
+--- This accepts a list of audio samples as amplitudes between -128 and 127.
+--- These are stored in an internal buffer and played back at 48kHz.
+--- If this buffer is full, this function will return `false`.
+--- Programs should wait for a `speaker_audio_empty` event before trying to play audio again.
+---
+--- The speaker only buffers a single call to `playAudio` at once.
+--- This means if you try to play a small number of samples, you'll have a lot of stutter.
+--- You should try to play as many samples in one call as possible (up to 128×1024), as this reduces the chances of
+--- audio stuttering or halting, especially when the server or computer is lagging.
+---
+--- While the speaker accepts 8-bit PCM audio, the audio stream is re-encoded before being played.
+--- This means that the supplied samples may not be played out exactly.
+---
+--- Playing audio with speakers provides a more complete guide to using speakers.
+---
+--- # Throws
+---
+--- - If the audio data is malformed.
+---
+--- # Usage
+---
+--- - Read audio data in blocks of 16 KiB from a file and play it through a speaker.
+---
+--- ```lua
+--- local dfpwm = require('cc.audio.dfpwm')
+--- local speaker = peripheral.find('speaker')
+---
+--- local decoder = dfpwm.make_decoder()
+---
+--- for audio_chunk in io.lines('data/example.dfpwm', 16 * 1024) do
+---     local audio_buffer = decoder(audio_chunk)
+---
+---     while not speaker.playAudio(audio_buffer) do
+---         os.pullEvent('speaker_audio_empty')
+---     end
+--- end
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.100
+---
+--- @param audio number[] A list of amplitudes.
+--- @param volume? number The volume to play this audio at. If not given, defaults to the previous volume given to `playAudio`.
+---
+--- @return boolean accepted If there was room to accept this audio data.
+function Speaker.playAudio(audio, volume) end
+
+--- [Official Documentation](https://tweaked.cc/peripheral/speaker.html#v:stop)
+---
+--- Stop all audio being played by this speaker.
+---
+--- This clears any audio that `playAudio` had queued and stops the latest sound played by `playSound`.
+---
+--- # Changes
+---
+--- - New in version 1.100
+function Speaker.stop() end

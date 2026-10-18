@@ -1,0 +1,24 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/setting_changed.html)
+---
+--- The `setting_changed` event is fired when a setting is modified with the `settings` API.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `string`: The name of the setting that was changed.
+--- 3. `unknown`: The value the setting was set to.
+--- 4. `unknown`: The previous value of the setting.
+---
+--- # Usage
+---
+--- - Update a setting, and then wait for the corresponding `setting_changed` event.
+---
+--- ```lua
+--- settings.set('my.setting', 123)
+---
+--- print(os.pullEvent('setting_changed'))
+--- ```
+---
+--- @alias cc.os.Event.SettingChanged 'setting_changed'

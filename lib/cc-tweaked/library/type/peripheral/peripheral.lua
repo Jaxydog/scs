@@ -1,0 +1,11 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/peripheral.html)
+---
+--- @alias cc.peripheral.Peripheral
+--- | cc.peripheral.Peripheral.Generic.Inventory A generic inventory peripheral.
+--- | cc.peripheral.Peripheral.Generic.FluidStorage A generic fluid storage peripheral.
+--- | cc.peripheral.Peripheral.Generic.EnergyStorage A generic energy storage peripheral.
+--- | cc.peripheral.Peripheral.Command A command block peripheral.
+--- | cc.peripheral.Peripheral.Computer A computer peripheral.
+--- | table An unknown peripheral type.

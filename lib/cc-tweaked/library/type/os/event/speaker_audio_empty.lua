@@ -1,0 +1,30 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/speaker_audio_empty.html)
+---
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `cc.peripheral.Name`: The name of the speaker which is available to play more audio.
+---
+--- # Usage
+---
+--- - Read audio data in blocks of 16 KiB from a file and play it through a speaker.
+---
+--- ```lua
+--- local dfpwm = require('cc.audio.dfpwm')
+--- local speaker = peripheral.find('speaker')
+---
+--- local decoder = dfpwm.make_decoder()
+---
+--- for audio_chunk in io.lines('data/example.dfpwm', 16 * 1024) do
+---     local audio_buffer = decoder(audio_chunk)
+---
+---     while not speaker.playAudio(audio_buffer) do
+---         os.pullEvent('speaker_audio_empty')
+---     end
+--- end
+--- ```
+---
+--- @alias cc.os.Event.SpeakerAudioEmpty 'speaker_audio_empty'

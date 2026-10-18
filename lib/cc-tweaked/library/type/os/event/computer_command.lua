@@ -1,0 +1,25 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/computer_command.html)
+---
+--- The `computer_command` event is fired when the `/computercraft queue` command is run for the
+--- current command computer.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `string...`: The arguments passed to the command.
+---
+--- # Usage
+---
+--- - Prints the contents of the messages sent.
+---
+--- ```lua
+--- while true do
+---     local event = { os.pullEvent('computer_command') }
+---
+---     print('Received message:', table.unpack(event, 2))
+--- end
+--- ```
+---
+--- @alias cc.os.Event.ComputerCommand 'computer_command'

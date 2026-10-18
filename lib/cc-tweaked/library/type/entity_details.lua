@@ -1,0 +1,61 @@
+--- [Official Documentation](https://tweaked.cc/reference/entity_details.html)
+---
+--- Some functions in CC: Tweaked (such as `commands.getEntities`)
+--- provide a way to get information about an entity.
+---
+--- This file details information about entities that CC: Tweaked may return.
+---
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/reference/entity_details.html)
+---
+--- Data contained by entity information tables.
+---
+--- # Examples
+---
+--- - A creeper.
+---
+--- ```lua
+--- {
+---     name = 'minecraft:creeper',
+---     displayName = 'Creeper',
+--- }
+--- ```
+---
+--- - A player at max health.
+---
+--- ```lua
+--- {
+---     name = 'minecraft:player',
+---     displayName = 'Alex',
+---     health = 20.0,
+---     maxHealth = 20.0,
+--- }
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.118.0
+---
+--- @class cc.EntityDetails
+---
+--- @field name string The namespaced ID for this entity, e.g. `minecraft:player`.
+---
+--- See the Minecraft wiki for a list of vanilla entity IDs.
+---
+--- @field displayName? string The translated display name of the entity.
+---
+--- This uses the server's language.
+---
+--- This will typically be English on multi-player servers, and your current language on single player.
+---
+--- @field health? number The current health of the entity.
+---
+--- @field maxHealth? number The maximum health of the entity.
+---
+--- @field tags? table<string, boolean> The set of tags for this entity.
+---
+--- This is a mapping of tag names to true.
+---
+--- While the representation of tags is a little more complicated then a single list,
+--- this makes it very easy to check if an item has a certain tag:

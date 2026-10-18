@@ -1,0 +1,24 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/paste.html)
+---
+--- The `paste` event is fired when text is pasted into the computer through `Ctrl-V` (or `⌘V` on Mac).
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `string`: The text that was pasted.
+---
+--- # Usage
+---
+--- - Print pasted text.
+---
+--- ```lua
+--- while true do
+---     local _, text = os.pullEvent('paste')
+---
+---     print(('"%s" was pasted'):format(text))
+--- end
+--- ```
+---
+--- @alias cc.os.Event.Paste 'paste'

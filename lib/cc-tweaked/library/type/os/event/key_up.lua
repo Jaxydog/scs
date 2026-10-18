@@ -1,0 +1,28 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/key_up.html)
+---
+--- Fired whenever a key is released (or the terminal is closed while a key was being pressed).
+---
+--- This event returns a numerical 'key code' (for instance, `F1` is `290`).
+--- This value may vary between versions and so it is recommended to use the constants in the keys API
+--- rather than hard coding numeric values.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `integer`: The numerical key value of the key pressed.
+---
+--- # Usage
+---
+--- - Print each key released on the keyboard whenever a `key_up` event is fired.
+---
+--- ```lua
+--- while true do
+---     local _, key = os.pullEvent('key_up')
+---
+---     print(keys.getName(key) or 'unknown key', 'was released')
+--- end
+--- ```
+---
+--- @alias cc.os.Event.KeyUp 'key_up'

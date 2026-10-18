@@ -1,0 +1,177 @@
+--- [Official Documentation](https://tweaked.cc/module/parallel.html)
+---
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/parallel.html)
+---
+--- A simple way to run several functions at once.
+---
+--- Functions are not actually executed simultaneously,
+--- but rather this API will automatically switch between them whenever they yield
+--- (e.g., whenever they call `coroutine.yield`, or functions that call that - such as `os.pullEvent` -
+--- or functions that call that, etc. - basically, anything that causes the function to 'pause').
+---
+--- Each function executed in 'parallel' gets its own copy of the event queue,
+--- and so 'event consuming' functions (again, mostly anything that causes the script to pause -
+--- e.g., `os.sleep`, `rednet.receive`, most of the turtle API, etc.) can safely be used in one
+--- without affecting the event queue accessed by the other.
+---
+--- > [!WARNING]
+--- > When using this API, be careful to pass the functions you want to run in parallel,
+--- > and not the result of calling those functions.
+--- >
+--- > For instance, the following is correct:
+--- >
+--- > ```lua
+--- > local function do_sleep() sleep(1) end
+--- > parallel.waitForAny(do_sleep, rednet.receive)
+--- > ```
+--- >
+--- > but the following is NOT:
+--- >
+--- > ```lua
+--- > local function do_sleep() sleep(1) end
+--- > parallel.waitForAny(do_sleep(), rednet.receive)
+--- > ```
+---
+--- # Changes
+---
+--- - New in version 1.2
+parallel = {}
+
+--- [Official Documentation](https://tweaked.cc/module/parallel.html#v:waitForAny)
+---
+--- Switches between execution of the functions, until any of them finishes.
+---
+--- If any of the functions errors, the message is propagated upwards from the `parallel.waitForAny` call.
+---
+--- # Usage
+---
+--- - Print a message every second until the `q` key is pressed.
+---
+--- ```lua
+--- local function tick()
+---     while true do
+---         os.sleep(1)
+---
+---         print('Tick')
+---     end
+--- end
+---
+--- local function wait_for_q()
+---     repeat
+---         local _, key = os.pullEvent('key')
+---     until key == keys.q
+---
+---     print('Q was pressed!')
+--- end
+---
+--- parallel.waitForAny(tick, wait_for_q)
+---
+--- print('Everything done!')
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.2
+---
+--- @param ... function The functions to run in parallel.
+---
+--- @return integer index (Undocumented) The parameter index of the function that exited first.
+function parallel.waitForAny(...) end
+
+--- [Official Documentation](https://tweaked.cc/module/parallel.html#v:waitForAll)
+---
+--- Runs several functions in parallel, until all of them are finished.
+---
+--- If any of the functions errors, the other functions are not resumed, and the error is propagated upwards.
+---
+--- > [!WARNING]
+--- > While any number of functions can be run in parallel,
+--- > running too many things in parallel can sometimes cause issues:
+--- >
+--- > - Computers only buffer 256 events at a time.
+--- >   Trying to run several hundred functions in parallel (particularly when calling peripheral methods)
+--- >   can cause the event queue to fill up, resulting in events being dropped, and programs getting stuck.
+--- >
+--- > - Computers only run 16 HTTP requests at a time.
+--- >   Trying to run more than that in parallel will have no effect.
+---
+--- ## Spawning new parallel functions
+---
+--- In some cases, you may want to start running additional functions
+--- in parallel from an existing `parallel.waitForAll` call.
+---
+--- Every function passed to `waitForAll` can accept a spawn argument,
+--- which can be called to spawn new parallel functions.
+---
+--- ```lua
+--- parallel.waitForAll(function(spawn)
+---     spawn(function() sleep(1); print('Finished 1') end)
+---     spawn(function() sleep(2); print('Finished 2') end)
+--- end)
+--- ```
+---
+--- # Usage
+---
+--- - Start off two timers an wait for them both to run.
+---
+--- ```lua
+--- local function a()
+---     os.sleep(1)
+---
+---     print('A is done')
+--- end
+---
+--- local function b()
+---     os.sleep(3)
+---
+---     print('B is done')
+--- end
+---
+--- parallel.waitForAll(a, b)
+---
+--- print('Everything done!')
+--- ```
+---
+--- - Generate a list of functions to run in parallel.
+---
+--- ```lua
+--- local functions = {}
+---
+--- for i = 1, 5 do
+---     table.insert(functions, function()
+---         os.sleep(math.random())
+---
+---         print('Finished ' .. i)
+---     end)
+--- end
+---
+--- parallel.waitForAll(table.unpack(functions))
+---
+--- print('Everything done!')
+--- ```
+---
+--- --- Run new functions in parallel from within `waitForAll`.
+---
+--- ```lua
+--- parallel.waitForAll(function(spawn)
+---     for i = 1, 5 do
+---         spawn(function()
+---             os.sleep(math.random())
+---
+---             print('Finished ' .. i)
+---         end)
+---     end
+--- end)
+---
+--- print('Everything done!')
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.2
+--- - Changed in version 1.120.0: Added ability to spawn new parallel functions.
+---
+--- @param ... fun(spawn: fun(fn: function, ...: any)) The functions to run in parallel.
+function parallel.waitForAll(...) end

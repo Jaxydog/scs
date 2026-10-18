@@ -1,0 +1,34 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/websocket_success.html)
+---
+--- The `websocket_success` event is fired when a WebSocket connection request returns successfully.
+---
+--- This event is normally handled inside `http.websocket`, but it can still be seen when using `http.websocketAsync`.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `string`: The URL of the WebSocket.
+--- 3. `cc.http.WebSocket`: The handle for the WebSocket.
+---
+--- # Usage
+---
+--- - Print a message when a WebSocket connects.
+---
+--- ```lua
+--- local myUrl = 'wss://example.tweaked.cc/echo'
+--- http.websocketAsync(myUrl)
+---
+--- local event, url, ws
+---
+--- repeat
+---     event, url, ws = os.pullEvent('websocket_success')
+--- until url == myUrl
+---
+--- print('Connected to', url)
+---
+--- ws.close()
+--- ```
+---
+--- @alias cc.os.Event.WebSocketSuccess 'websocket_success'

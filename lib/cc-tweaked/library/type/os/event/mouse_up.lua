@@ -1,0 +1,27 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/mouse_up.html)
+---
+--- This event is fired when a mouse button is released or a held mouse leaves the computer's terminal.
+--- This event is only fired on advanced computers (including advanced turtles and pocket computers).
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `cc.os.MouseButton`: The mouse button that was released.
+--- 3. `integer`: The X-coordinate of the click.
+--- 4. `integer`: The Y-coordinate of the click.
+---
+--- # Usage
+---
+--- - Print the button and the coordinates whenever the mouse is released.
+---
+--- ```lua
+--- while true do
+---     local _, button, x, y = os.pullEvent('mouse_up')
+---
+---     print(('The mouse button %d was released at %d, %d'):format(button, x, y))
+--- end
+--- ```
+---
+--- @alias cc.os.Event.MouseUp 'mouse_up'

@@ -1,0 +1,35 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/modem_message.html)
+---
+--- The `modem_message` event is fired when a message is received on an open channel on any modem.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `cc.peripheral.Side`: The side of the modem that received the message.
+--- 3. `integer`: The channel that the message was sent on.
+--- 4. `integer`: The reply channel sent by the sender.
+--- 5. `unknown`: The message as sent by the sender.
+--- 6. `number?`: The distance between the sender and the receiver in blocks,
+---     or `nil` if the message was sent between dimensions.
+---
+--- # Usage
+---
+--- - Wrap a modem peripheral, open channel `0` for listening, and print all received messages.
+---
+--- ```lua
+--- local modem = peripheral.find('modem') or error('No modem attached', 0)
+---
+--- modem.open(0)
+---
+--- while true do
+---     local _, side, recvChannel, sendChannel, message, distance = os.pullEvent('modem_message')
+---
+---     print(('Message received on side %s on channel %d (reply to %d) from %f blocks away with message %s'):format(
+---         side, recvChannel, sendChannel, distance, tostring(message)
+---     ))
+--- end
+--- ```
+---
+--- @alias cc.os.Event.ModemMessage 'modem_message'

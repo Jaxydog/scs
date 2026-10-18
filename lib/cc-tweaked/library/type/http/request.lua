@@ -1,0 +1,23 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/http.html#v:request)
+---
+--- @class cc.http.Request
+---
+--- @field url string The URL to request.
+---
+--- @field body? string An optional string containing the body of the request.
+--- If specified (and `method` is not specified), a `POST` request will be made instead.
+---
+--- @field headers? table<string, string> Additional headers to send as part of this request.
+---
+--- @field binary? boolean Whether the response handle should be opened in binary mode.
+---
+--- @field method? cc.http.Request.Method Which HTTP method to use, for instance `PATCH` or `DELETE`.
+---
+--- @field redirect? boolean Whether to follow HTTP redirects. Defaults to `true`.
+---
+--- @field timeout? number The connection timeout in seconds.
+---
+--- @see http.get()
+--- @see http.post()

@@ -1,0 +1,248 @@
+--- [Official Documentation](https://tweaked.cc/module/commands.html)
+---
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/commands.html)
+---
+--- Execute Minecraft commands and gather data from the results from a command computer.
+---
+--- While one may use `commands.exec` directly to execute a command,
+--- the commands API also provides helper methods to execute every command.
+--- For instance, `commands.say("Hi!")` is equivalent to `commands.exec("say Hi!")`.
+---
+--- `commands.async` provides a similar interface to execute asynchronous commands.
+--- `commands.async.say("Hi!")` is equivalent to `commands.execAsync("say Hi!")`.
+---
+--- # Changes
+---
+--- - New in version 1.7
+commands = {}
+
+--- [Official Documentation](https://tweaked.cc/module/commands.html#v:exec)
+---
+--- Execute a specific command.
+---
+--- # Usage
+---
+--- - Set the block above the command computer to stone.
+---
+--- ```lua
+--- commands.exec('setblock ~ ~1 ~ minecraft:stone')
+--- ```
+---
+--- # Changes
+---
+--- - Changed in version 1.71: Added return value with command output.
+--- - Changed in version 1.85.0: Added return value with the number of affected objects.
+---
+--- @param command string The command to execute.
+---
+--- @return boolean success Whether the command executed successfully.
+--- @return string[] output The output of this command, as a list of lines.
+--- @return integer? objects The number of "affected" objects, or `nil` if the command fails.
+---
+--- @return_overload true, string[], integer
+--- @return_overload false, string[], nil
+---
+--- The definition varies from command to command.
+function commands.exec(command) end
+
+--- [Official Documentation](https://tweaked.cc/module/commands.html#v:execAsync)
+---
+--- Asynchronously execute a command.
+---
+--- Unlike `exec`, this will immediately return, instead of waiting for the command to execute.
+--- This allows you to run multiple commands at the same time.
+---
+--- When this command has finished executing, it will queue a `task_complete` event
+--- containing the result of executing this command (what `exec` would return).
+---
+--- # Usage
+---
+--- - Asynchronously set the block above the computer to stone.
+---
+--- ```lua
+--- commands.execAsync('setblock ~ ~1 ~ minecraft:stone')
+--- ```
+---
+--- @param command string The command to execute.
+---
+--- @return integer id The "task id".
+---
+--- When this command has been executed, it will queue a `task_complete` event with a matching ID.
+---
+--- @see parallel
+function commands.execAsync(command) end
+
+--- [Official Documentation](https://tweaked.cc/module/commands.html#v:list)
+---
+--- List all available commands which the computer has permission to execute.
+---
+--- @param ... string The sub-command to complete.
+---
+--- @return string[] commands A list of available commands.
+function commands.list(...) end
+
+--- [Official Documentation](https://tweaked.cc/module/commands.html#v:getDimension)
+---
+--- Get the name of the dimension the current command computer is in, such as `minecraft:overworld`.
+---
+--- # Changes
+---
+--- - New in version 1.119.0
+---
+--- @return string dimension The dimension the computer is in.
+---
+--- @see commands.getBlockPosition()
+function commands.getDimension() end
+
+--- [Official Documentation](https://tweaked.cc/module/commands.html#v:getBlockPosition)
+---
+--- Get the position of the current command computer.
+---
+--- @return integer x This computer's x position.
+--- @return integer y This computer's y position.
+--- @return integer z This computer's z position.
+---
+--- @see gps.locate
+--- @see commands.getDimension()
+function commands.getBlockPosition() end
+
+--- [Official Documentation](https://tweaked.cc/module/commands.html#v:getBlockInfos)
+---
+--- Get information about a range of blocks.
+---
+--- This returns the same information as getBlockInfo, just for multiple blocks at once.
+---
+--- Blocks are traversed by ascending y level, followed by z and x.
+--- The returned table may be indexed using `x + z*width + y*width*depth + 1`.
+---
+--- # Throws
+---
+--- - If the coordinates are not within the world.
+--- - If trying to get information about blocks more than 4096 blocks away.
+---
+--- # Usage
+---
+--- - Print out all blocks in a cube around the computer.
+---
+--- ```lua
+--- local x, y, z = commands.getBlockPosition()
+--- local min_x, min_y, min_z, max_x, max_y, max_z = x - 1, y - 1, z - 1, x + 1, y + 1, z + 1
+--- local blocks = commands.getBlockInfos(min_x, min_y, min_z, max_x, max_y, max_z)
+---
+--- local width, height, depth = max_x - min_x + 1, max_y - min_y + 1, max_z - min_z + 1
+---
+--- for x = min_x, max_x do
+---     for y = min_y, may_y do
+---         for z = min_z, maz_z do
+---             local block = blocks[(x - min_x) + (z - min_z) * width + (y - min_y) * width * depth + 1]
+---
+---             print(('%d, %d, %d => %s'):format(x, y, z, block.name))
+---         end
+---     end
+--- end
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.76
+--- - Changed in version 1.99: Added `dimension` argument.
+---
+--- @param minX integer The start x coordinate of the range to query.
+--- @param minY integer The start y coordinate of the range to query.
+--- @param minZ integer The start z coordinate of the range to query.
+--- @param maxX integer The end x coordinate of the range to query.
+--- @param maxY integer The end y coordinate of the range to query.
+--- @param maxZ integer The end z coordinate of the range to query.
+--- @param dimension? string The dimension to query (e.g., `"minecraft:overworld"`).
+---
+--- Defaults to the current dimension.
+---
+--- @return cc.BlockDetails[] blocks A list of information about each block.
+---
+--- @see commands.getBlockInfo()
+function commands.getBlockInfos(minX, minY, minZ, maxX, maxY, maxZ, dimension) end
+
+--- [Official Documentation](https://tweaked.cc/module/commands.html#v:getBlockInfo)
+---
+--- Get some basic information about a block.
+---
+--- The returned table contains the same information as listed in Block details.
+--- If there is a block entity for that block, its NBT will also be returned.
+---
+--- # Throws
+---
+--- - If the coordinates are not within the world, or are not currently loaded.
+---
+--- # Changes
+---
+--- - Changed in version 1.76: Added block state info to return value.
+--- - Changed in version 1.99: Added `dimension` argument.
+---
+--- @param x integer The x position of the block to query.
+--- @param y integer The y position of the block to query.
+--- @param z integer The z position of the block to query.
+--- @param dimension? string The dimension to query (e.g. "minecraft:overworld").
+---
+--- Defaults to the current dimension.
+---
+--- @return cc.BlockDetails block The given block's information.
+---
+--- @see commands.getBlockInfos()
+function commands.getBlockInfo(x, y, z, dimension) end
+
+--- [Official Documentation](https://tweaked.cc/module/commands.html#v:getEntities)
+---
+--- Get all entities matching the given selector.
+---
+--- # Throws
+---
+--- - If the entity selector cannot be parsed.
+---
+--- # Usage
+---
+--- - Print the name of all entities within 10 blocks of the command computer.
+---
+--- ```lua
+--- for _, entity in ipairs(commands.getEntities('@e[distance=..10]')) do
+---     print(entity.displayName)
+--- end
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.118.0
+---
+--- @param selector string An entity selector, such as `@p` or `@a`.
+---
+--- @return cc.EntityDetails[] entities A list of information about all matching entities.
+function commands.getEntities(selector) end
+
+--- [Official Documentation](https://tweaked.cc/module/commands.html#v:native)
+---
+--- The builtin commands API, without any generated command helper functions
+---
+--- This may be useful if a built-in function (such as `commands.list`) has been overwritten by a command.
+---
+--- @type table<string, fun(...: any): boolean, string[], integer?>
+commands.native = {}
+
+--- [Official Documentation](https://tweaked.cc/module/commands.html#v:async)
+---
+--- A table containing asynchronous wrappers for all commands.
+---
+--- As with `commands.execAsync`, this returns the "task id" of the enqueued command.
+---
+--- # Usage
+---
+--- - Asynchronously sets the block above the computer to stone.
+---
+--- ```lua
+--- commands.async.setblock('~', '~1', '~', 'minecraft:stone')
+--- ```
+---
+--- @see commands.execAsync()
+---
+--- @type table<string, fun(...: any): integer>
+commands.async = {}

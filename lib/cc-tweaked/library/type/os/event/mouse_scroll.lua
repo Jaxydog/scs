@@ -1,0 +1,26 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/mouse_scroll.html)
+---
+--- This event is fired when a mouse wheel is scrolled in the terminal.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `cc.os.MouseScrollDirection`: The direction of the scroll.
+--- 3. `integer`: The X-coordinate of the mouse when scrolling.
+--- 4. `integer`: The Y-coordinate of the mouse when scrolling.
+---
+--- # Usage
+---
+--- - Print the direction of each scroll, and the position of the mouse at the time.
+---
+--- ```lua
+--- while true do
+---     local _, direction, x, y = os.pullEvent('mouse_scroll')
+---
+---     print(('The mouse was scrolled in direction %d at %d, %d'):format(direction, x, y))
+--- end
+--- ```
+---
+--- @alias cc.os.Event.MouseScroll 'mouse_scroll'

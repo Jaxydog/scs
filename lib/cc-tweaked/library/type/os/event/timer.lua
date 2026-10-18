@@ -1,0 +1,27 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/timer.html)
+---
+--- The `timer` event is fired when a timer started with `os.startTimer` completes.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `integer`: The ID of the time that finished.
+---
+--- # Usage
+---
+--- - Start and wait for a timer to finish.
+---
+--- ```lua
+--- local timer_id = os.startTimer(2)
+--- local event, id
+---
+--- repeat
+---     event, id = os.pullEvent('timer')
+--- until id == timer_id
+---
+--- print('Timer with ID', id, 'was fired')
+--- ```
+---
+--- @alias cc.os.Event.Timer 'timer'

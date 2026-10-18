@@ -1,0 +1,11 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/io.html#ty:Handle:read)
+---
+--- @alias cc.io.ReadFormat
+--- | 'l' Return the next line (excluding newline).
+--- | '*l' Return the next line (excluding newline).
+--- | 'L' Return the next line (including newline).
+--- | '*L' Return the next line (including newline).
+--- | 'a' Return the rest of the buffer.
+--- | '*a' Return the rest of the buffer.

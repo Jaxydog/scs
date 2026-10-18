@@ -1,0 +1,22 @@
+--- @meta
+
+--- One of Minecraft's noteblock instruments.
+---
+--- @alias cc.peripheral.Peripheral.Speaker.Instrument
+--- | 'banjo'
+--- | 'basedrum'
+--- | 'bass'
+--- | 'bell'
+--- | 'bit'
+--- | 'chime'
+--- | 'cow_bell'
+--- | 'didgeridoo'
+--- | 'flute'
+--- | 'guitar'
+--- | 'harp'
+--- | 'hat'
+--- | 'iron_xylophone'
+--- | 'pling'
+--- | 'snare'
+--- | 'xylophone'
+--- | string Any other non-vanilla instrument.

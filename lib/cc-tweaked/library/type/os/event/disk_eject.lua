@@ -1,0 +1,24 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/disk_eject.html)
+---
+--- The `disk_eject` event is fired when a disk is removed from an adjacent or networked disk drive.
+---
+--- # Return values.
+---
+--- 1. `string`: The event name.
+--- 2. `cc.peripheral.Name`: The side or network ID of the disk drive that had a disk removed.
+---
+--- # Usage
+---
+--- - Print a message when a disk is removed.
+---
+--- ```lua
+--- while true do
+---     local _, name = os.pullEvent('disk_eject')
+---
+---     print('Removed a disk from drive', name)
+--- end
+--- ```
+---
+--- @alias cc.os.Event.DiskEject 'disk_eject'

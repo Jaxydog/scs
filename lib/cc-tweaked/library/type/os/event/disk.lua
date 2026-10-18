@@ -1,0 +1,24 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/disk.html)
+---
+--- The `disk` event is fired when a disk is inserted into an adjacent or networked disk drive.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `cc.peripheral.Name`: The side or network ID of the disk drive that had a disk inserted.
+---
+--- # Usage
+---
+--- - Print a message when a disk is inserted.
+---
+--- ```lua
+--- while true do
+---     local _, name = os.pullEvent('disk')
+---
+---     print('Inserted a disk into drive', name)
+--- end
+--- ```
+---
+--- @alias cc.os.Event.Disk 'disk'

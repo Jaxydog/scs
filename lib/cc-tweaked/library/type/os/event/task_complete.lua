@@ -1,0 +1,36 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/task_complete.html)
+---
+--- The `task_complete` event is fired when an asynchronous task completes.
+--- This is usually handled inside the function call that queued the task; however, functions such
+--- as `commands.execAsync` return immediately so the user can wait for completion.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `integer`: The ID of the task that completed.
+--- 3. `boolean`: Whether the command succeeded.
+--- 4. `string`: If the command failed, an error message explaining the failure (not present on success).
+--- 5. `unknown...`: Any parameters returned from the command.
+---
+--- # Usage
+---
+--- - Print the results of an asynchronous command.
+---
+--- ```lua
+--- local task_id = commands.async.say('say hello')
+--- local event_data
+---
+--- repeat
+---     event_data = { os.pullEvent('task_complete') }
+--- until event_data[2] == task_id
+---
+--- if event_data[3] then
+---     print('Task', event_data[2], 'succeeded:', table.unpack(event_data, 4))
+--- else
+---     print('Task', event_data[2], 'failed:', event_data[4])
+--- end
+--- ```
+---
+--- @alias cc.os.Event.TaskComplete 'task_complete'

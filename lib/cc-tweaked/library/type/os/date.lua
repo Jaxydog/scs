@@ -1,0 +1,25 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/os.html#v:date)
+---
+--- A table returned via `os.date`.
+---
+--- @alias cc.os.Date
+---
+--- @field year integer The year.
+---
+--- @field month integer The month.
+---
+--- @field day integer The day relative to the start of the current month.
+---
+--- @field yday integer The day relative to the start of the current year.
+---
+--- @field wday integer The day relative to the start of the current week.
+---
+--- @field hour integer The hour.
+---
+--- @field min integer The minute.
+---
+--- @field sec integer The second.
+---
+--- @field isdst boolean Whether Daylight Savings Time is in effect.

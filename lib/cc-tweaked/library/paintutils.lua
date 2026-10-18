@@ -1,0 +1,168 @@
+--- [Official Documentation](https://tweaked.cc/module/paintutils.html)
+---
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/paintutils.html)
+---
+--- Utilities for drawing more complex graphics, such as pixels, lines, and images.
+---
+--- # Changes
+---
+--- - New in version 1.45
+paintutils = {}
+
+--- [Official Documentation](https://tweaked.cc/module/paintutils.html#v:parseImage)
+---
+--- Parses an image from a multiline string.
+---
+--- # Usage
+---
+--- - Parse and image from a string and draw it.
+---
+--- ```lua
+--- local image = paintutils.parseImage([[
+---  e  e
+---
+---
+--- e    e
+---  eeee
+--- ]])
+---
+--- paintutils.drawImage(image)
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.80pr1
+---
+--- @param image string The string containing the raw image data.
+---
+--- @return table The parsed image data, suitable for use with `paintutils.drawImage`.
+function paintutils.parseImage(image) end
+
+--- [Official Documentation](https://tweaked.cc/module/paintutils.html#v:loadImage)
+---
+--- Loads an image from a file.
+---
+--- You can create a file suitable for being loaded using the `paint` program.
+---
+--- # Usage
+---
+--- - Load an image and draw it.
+---
+--- ```lua
+--- local image = paintutils.loadImage('data/example.nfp')
+---
+--- paintutils.drawImage(image, term.getCursorPos())
+--- ```
+---
+--- @param path string The file to load.
+---
+--- @return table? image The parsed image data, suitable for use with `paintutils.drawImage`,
+--- or `nil` if the file does not exist.
+function paintutils.loadImage(path) end
+
+--- [Official Documentation](https://tweaked.cc/module/paintutils.html#v:drawPixel)
+---
+--- Draws a single pixel to the current terminal at the specified position.
+---
+--- > [!WARNING]
+--- > This function may change the position of the cursor and the current background color.
+--- > You should not expect either to be preserved.
+---
+--- @param xPos integer The X position to draw at, where `1` is the far left.
+--- @param yPos integer The Y position to draw at, where `1` is the very top.
+--- @param color? integer The color of this pixel. This will be the current background color if not specified.
+function paintutils.drawPixel(xPos, yPos, color) end
+
+--- [Official Documentation](https://tweaked.cc/module/paintutils.html#v:drawLine)
+---
+--- Draws a straight line from the start to end position.
+---
+--- > [!WARNING]
+--- > This function may change the position of the cursor and the current background color.
+--- > You should not expect either to be preserved.
+---
+--- # Usage
+---
+--- - Draw a red line.
+---
+--- ```lua
+--- paintutils.drawLine(2, 3, 30, 7, colors.red)
+--- ```
+---
+--- @param startX integer The starting X position of the line.
+--- @param startY integer The starting Y position of the line.
+--- @param endX integer The ending X position of the line.
+--- @param endY integer The ending Y position of the line.
+--- @param color? integer The color of this line. This will be the current background color if not specified.
+function paintutils.drawLine(startX, startY, endX, endY, color) end
+
+--- [Official Documentation](https://tweaked.cc/module/paintutils.html#v:drawBox)
+---
+--- Draws the outline of a box on the current terminal from the specified start position to the specified end position.
+---
+--- > [!WARNING]
+--- > This function may change the position of the cursor and the current background color.
+--- > You should not expect either to be preserved.
+---
+--- # Usage
+---
+--- - Draw a red box.
+---
+--- ```lua
+--- paintutils.drawBox(2, 3, 30, 7, colors.red)
+--- ```
+---
+--- @param startX integer The starting X position of the box.
+--- @param startY integer The starting Y position of the box.
+--- @param endX integer The ending X position of the box.
+--- @param endY integer The ending Y position of the box.
+--- @param color? integer The color of this box. This will be the current background color if not specified.
+function paintutils.drawBox(startX, startY, endX, endY, color) end
+
+--- [Official Documentation](https://tweaked.cc/module/paintutils.html#v:drawFilledBox)
+---
+--- Draws a filled box on the current terminal from the specified start position to the specified end position.
+---
+--- > [!WARNING]
+--- > This function may change the position of the cursor and the current background color.
+--- > You should not expect either to be preserved.
+---
+--- # Usage
+---
+--- - Draw a red box.
+---
+--- ```lua
+--- paintutils.drawFilledBox(2, 3, 30, 7, colors.red)
+--- ```
+---
+--- @param startX integer The starting X position of the box.
+--- @param startY integer The starting Y position of the box.
+--- @param endX integer The ending X position of the box.
+--- @param endY integer The ending Y position of the box.
+--- @param color? integer The color of this box. This will be the current background color if not specified.
+function paintutils.drawFilledBox(startX, startY, endX, endY, color) end
+
+--- [Official Documentation](https://tweaked.cc/module/paintutils.html#v:drawImage)
+---
+--- Draw an image loaded by `paintutils.parseImage` or `paintutils.loadImage`.
+---
+--- > [!WARNING]
+--- > This function may change the position of the cursor and the current background color.
+--- > You should not expect either to be preserved.
+---
+--- # Usage
+---
+--- - Load an image and draw it.
+---
+--- ```lua
+--- local image = paintutils.loadImage('data/example.nfp')
+---
+--- paintutils.drawImage(image, term.getCursorPos())
+--- ```
+---
+--- @param image table The parsed image data.
+--- @param xPos integer The X position to start drawing at, where `1` is the far left.
+--- @param yPos integer The Y position to start drawing at, where `1` is the very top.
+function paintutils.drawImage(image, xPos, yPos) end

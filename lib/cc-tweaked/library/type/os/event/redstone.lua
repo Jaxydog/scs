@@ -1,0 +1,23 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/redstone.html)
+---
+--- The `redstone` event is fired whenever any redstone inputs on the computer or relay change.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+---
+--- # Usage
+---
+--- - Print a message when a redstone input changes.
+---
+--- ```lua
+--- while true do
+---     os.pullEvent('redstone')
+---
+---     print('A redstone input has changed')
+--- end
+--- ```
+---
+--- @alias cc.os.Event.Redstone 'redstone'

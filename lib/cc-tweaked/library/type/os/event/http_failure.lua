@@ -1,0 +1,54 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/http_failure.html)
+---
+--- The `http_failure` event is fired when an HTTP request fails.
+---
+--- This event is normally handled inside `http.get` and `http.post`,
+--- but it can still be seen when using `http.request`.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `string`: The URL of the site requested.
+--- 3. `string`: An error describing the failure.
+--- 4. `cc.http.Response?`: A response handle if the connection succeeded, but the server's response indicated failure.
+---
+--- # Usage
+---
+--- - Print an error why the website cannot be contacted.
+---
+--- ```lua
+--- local myUrl = 'https://does.not.exist.tweaked.cc'
+---
+--- http.request(myUrl)
+---
+--- local event, url, err
+---
+--- repeat
+---     event, url, err = os.pullEvent('http_failure')
+--- until url == myUrl
+---
+--- print('The URL', url, 'could not be reached:', err)
+--- ```
+---
+--- - Print the status code of a webpage that does not exist.
+---
+--- ```lua
+--- local myUrl = 'https://tweaked.cc/this/does/not/exist'
+---
+--- http.request(myUrl)
+---
+--- local event, url, err, handle
+---
+--- repeat
+---     event, url, err, handle = os.pullEvent('http_failure')
+--- until url == myUrl
+---
+--- print('The URL', url, 'could not be reached:', err)
+--- print(handle.getResponseCode())
+---
+--- handle.close()
+--- ```
+---
+--- @alias cc.os.Event.HttpFailure 'http_failure'

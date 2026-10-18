@@ -1,0 +1,18 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:attributes)
+---
+--- Contains information about the size of the file, whether it is a directory,
+--- when it was created and last modified, and whether it is read only.
+---
+--- @class cc.fs.Attributes
+---
+--- @field size integer The size of the file in bytes.
+---
+--- @field isDir boolean Whether the file is a directory.
+---
+--- @field isReadOnly boolean Whether the file is read-only.
+---
+--- @field created integer The creation date in milliseconds since the UNIX epoch.
+---
+--- @field modified integer The last modification date in milliseconds since the UNIX epoch.

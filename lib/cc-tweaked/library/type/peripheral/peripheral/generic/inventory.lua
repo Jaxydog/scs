@@ -1,0 +1,108 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/generic_peripheral/inventory.html)
+---
+--- Methods for interacting with inventories.
+---
+--- # Changes
+---
+--- - New in version 1.94.0
+---
+--- @class cc.peripheral.Peripheral.Generic.Inventory
+local GenericInventory = {}
+
+--- [Official Documentation](https://tweaked.cc/generic_peripheral/inventory.html#v:size)
+---
+--- Get the size of this inventory.
+---
+--- @return integer slots The number of slots in this inventory.
+function GenericInventory.size() end
+
+--- [Official Documentation](https://tweaked.cc/generic_peripheral/inventory.html#v:list)
+---
+--- List all items in this inventory. This returns a table, with an entry for each slot.
+---
+--- Each item in the inventory is represented by a table containing some basic information.
+--- More information can be fetched with `getItemDetail`.
+--- The table contains the item name, the count, and a (potentially `nil`) hash of the item's NBT.
+--- This NBT data doesn't contain anything useful, but allows you to distinguish identical items.
+---
+--- The returned table is sparse, and so empty slots will be `nil`.
+--- It is recommended to loop over the table using `pairs` rather than `ipairs`.
+---
+--- @return table<integer, cc.ItemDetails?> list Basic information about all items in this inventory.
+---
+--- @see cc.ItemDetails
+function GenericInventory.list() end
+
+--- [Official Documentation](https://tweaked.cc/generic_peripheral/inventory.html#v:getItemDetail)
+---
+--- Get detailed information about an item.
+---
+--- # Throws
+---
+--- - If the slot is out of range.
+---
+--- # Usage
+---
+--- - Print some information about the first item in a chest.
+---
+--- ```lua
+--- local chest = peripheral.find('minecraft:chest')
+--- local item = chest.getItemDetail(1)
+---
+--- if not item then
+---     print('No item')
+---
+---     return
+--- end
+---
+--- print(('%s (%s)'):format(item.displayName, item.name))
+--- print(('Count: %d/%d'):format(item.count, item.maxCount))
+---
+--- if item.damage ~= nil then
+---     print(('Damage: %d/%d'):format(item.damage, item.maxDamage))
+--- end
+--- ```
+---
+--- @param slot integer The slot to get information about.
+---
+--- @return cc.ItemDetails? details information about the item in this slot, or `nil` if it is empty.
+---
+--- @see cc.ItemDetails
+function GenericInventory.getItemDetail(slot) end
+
+--- [Official Documentation](https://tweaked.cc/generic_peripheral/inventory.html#v:getItemLimit)
+---
+--- Get the maximum number of items which can be stored in this slot.
+---
+--- Typically this will be limited to 64 items.
+--- However, some inventories (such as barrels or caches) can store hundreds or thousands of items in one slot.
+---
+--- # Throws
+---
+--- - If the slot is out of range.
+---
+--- # Usage
+---
+--- - Count the maximum number of items an adjacent chest can hold.
+---
+--- ```lua
+--- local chest = peripheral.find('minecraft:chest')
+--- local total = 0
+---
+--- for slot = 1, chest.size() do
+---     total = total + chest.getItemLimit(slot)
+--- end
+---
+--- print(total)
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.96.0
+---
+--- @param slot integer The slot.
+---
+--- @return integer maximum The maximum number of items in the slot.
+function GenericInventory.getItemLimit(slot) end

@@ -1,0 +1,16 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/http_check.html)
+---
+--- The `http_check` event is fired when a URL check finishes.
+---
+--- This event is normally handled inside `http.checkURL`, but it can still be seen when using `http.checkURLAsync`.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `string`: The URL requested to be checked.
+--- 3. `boolean`: Whether the check succeeded.
+--- 4. `string?`: If the check failed, a reason explaining why it failed.
+---
+--- @alias cc.os.Event.HttpCheck 'http_check'

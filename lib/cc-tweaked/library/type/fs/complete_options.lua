@@ -1,0 +1,20 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/fs.html#v:complete)
+---
+--- This table form is an expanded version of the previous syntax.
+--- The `include_files` and `include_dirs` arguments from the past function parameters are passed in as fields.
+---
+--- This table also accepts the following options:
+---
+--- - `include_hidden`: Whether to include hidden files (those starting with `.`) by default.
+---   They will still be shown when typing a `.`.
+---
+--- @class cc.fs.CompleteOptions
+---
+--- @field include_files? boolean When `false`, only directories will be included in the list (default `true`).
+---
+--- @field include_dirs? boolean When `false`, "raw" directories will not be included in the list (default `true`).
+---
+--- @field include_hidden? boolean When `false`, hidden files (starting with `.`) will not be included in the list
+--- unless the first character of the search string is `.`.

@@ -1,0 +1,12 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/os.html#v:time)
+---
+--- A possible time locale.
+---
+--- @alias cc.os.Locale
+--- | 'ingame' The current world time.
+--- | 'inGame' The current world time.
+--- | 'utc' The hour of the day in UTC time.
+--- | 'UTC' The hour of the day in UTC time.
+--- | 'local' The hour of the day in the timezone the server is located in.

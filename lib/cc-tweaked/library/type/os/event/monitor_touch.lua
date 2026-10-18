@@ -1,0 +1,26 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/monitor_touch.html)
+---
+--- The `monitor_touch` event is fired when an adjacent or networked Advanced Monitor is right-clicked.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `cc.peripheral.Name`: The side or network ID of the monitor that was resized.
+--- 3. `integer`: The X coordinate of the touch, in characters.
+--- 4. `integer`: The Y coordinate of the touch, in characters.
+---
+--- # Usage
+---
+--- - Print a message when a monitor is touched.
+---
+--- ```lua
+--- while true do
+---     local _, name, x, y = os.pullEvent('monitor_touch')
+---
+---     print('Monitor', name, 'was touched at', ('(%d, %d)'):format(x, y))
+--- end
+--- ```
+---
+--- @alias cc.os.Event.MonitorTouch 'monitor_touch'

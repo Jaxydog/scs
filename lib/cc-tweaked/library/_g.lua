@@ -1,0 +1,220 @@
+--- [Official Documentation](https://tweaked.cc/module/_G.html)
+---
+--- Functions in the global environment, defined in `bios.lua`.
+--- This does not include standard Lua functions.
+---
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/_G.html#v:_HOST)
+---
+--- Stores the current ComputerCraft and Minecraft versions.
+---
+--- Outside of Minecraft (for instance, in an emulator) `_HOST` will contain the emulator's version instead.
+---
+--- If you need to check for the presence of a feature,
+--- it is usually better to rely on feature detection,
+--- rather than comparing mod or Minecraft versions.
+---
+--- For example, `ComputerCraft 1.93.0 (Minecraft 1.15.2)`.
+---
+--- # Usage
+---
+--- - Print the current computer's environment.
+---
+--- ```lua
+--- print(_HOST)
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.76
+---
+--- @see os.version
+_HOST = ''
+
+--- [Official Documentation](https://tweaked.cc/module/_G.html#v:_CC_DEFAULT_SETTINGS)
+---
+--- The default computer settings as defined in the ComputerCraft configuration.
+---
+--- This is a comma-separated list of settings pairs defined by the mod configuration or server owner.
+--- By default, it is empty.
+---
+--- An example value to disable autocompletion:
+---
+--- `shell.autocomplete=false,lua.autocomplete=false,edit.autocomplete=false`
+---
+--- # Usage
+---
+--- - Print the server's default computer settings.
+---
+--- ```lua
+--- print(_CC_DEFAULT_SETTINGS)
+--- ```
+---
+--- # Changes
+---
+--- New in version 1.77
+_CC_DEFAULT_SETTINGS = ''
+
+--- [Official Documentation](https://tweaked.cc/module/_G.html#v:sleep)
+---
+--- Pauses execution for the specified number of seconds.
+---
+--- As it waits for a fixed amount of world ticks,
+--- `time` will automatically be rounded up to the nearest multiple of 0.05 seconds.
+---
+--- If you are using coroutines or the parallel API,
+--- it will only pause execution of the current thread, not the whole program.
+---
+--- > [!TIP]
+--- > Because sleep internally uses timers, it is a function that yields.
+--- > This means that you can use it to prevent "Too long without yielding" errors.
+--- > However, as the minimum sleep time is 0.05 seconds, it will slow your program down.
+---
+---
+--- > [!WARNING]
+--- > Internally, this function queues and waits for a timer event (using `os.startTimer`),
+--- > however it does not listen for any other events.
+--- >
+--- > This means that any event that occurs while sleeping will be entirely discarded.
+--- > If you need to receive events while sleeping, consider using timers, or the parallel API.
+---
+--- # Usage
+---
+--- - Sleep for three seconds.
+---
+--- ```lua
+--- print('Sleeping for three seconds')
+---
+--- sleep(3)
+---
+--- print('Done!')
+--- ```
+---
+--- @param time number The number of seconds to sleep for, rounded up to the nearest multiple of 0.05.
+---
+--- @see os.startTimer()
+function sleep(time) end
+
+--- [Official Documentation](https://tweaked.cc/module/_G.html#v:write)
+---
+--- Writes a line of text to the screen without a newline at the end,
+--- wrapping text if necessary.
+---
+--- # Usage
+---
+--- - Write 'Hello, world!' to the terminal.
+---
+--- ```lua
+--- write('Hello, world!')
+--- ```
+---
+--- @param text string The text to write to the screen.
+---
+--- @return integer lines The number of lines written.
+---
+--- @see print()
+function write(text) end
+
+--- [Official Documentation](https://tweaked.cc/module/_G.html#v:print)
+---
+--- Prints the specified values to the screen separated by spaces,
+--- wrapping if necessary.
+---
+--- After printing, the cursor is moved to the next line.
+---
+--- # Usage
+---
+--- - Write 'Hello, world!' to the terminal and move the cursor to the next line.
+---
+--- ```lua
+--- print('Hello, world!')
+--- ```
+---
+--- @param ... any The values to print on the screen.
+---
+--- @return integer lines The number of lines written.
+function print(...) end
+
+--- [Official Documentation](https://tweaked.cc/module/_G.html#v:printError)
+---
+--- Prints the specified values to the screen in red,
+--- separated by spaces, wrapping if necessary.
+---
+--- After printing, the cursor is moved to the next line.
+---
+--- # Usage
+---
+--- - Write 'Something went wrong!' to the terminal in red, and move the cursor to the next line.
+---
+--- ```lua
+--- printError('Something went wrong!')
+--- ```
+---
+--- @param ... any The values to print on the screen.
+function printError(...) end
+
+--- [Official Documentation](https://tweaked.cc/module/_G.html#v:read)
+---
+--- Reads user input from the terminal.
+---
+--- This automatically handles arrow keys, pasting, character replacement,
+--- history scrollback, auto-completion, and default values.
+---
+--- # Usage
+---
+--- - Read a string and echo it back to the user.
+---
+--- ```lua
+--- write('> ')
+--- print(read())
+--- ```
+---
+--- - Prompt a user for a password.
+---
+--- ```lua
+--- while true do
+---     write('Password: ')
+---
+---     if read('*') == 'let me in' then break end
+---
+---     printError('Incorrect password, try again.')
+--- end
+---
+--- print('Logged in!')
+--- ```
+---
+--- - A complete example with completion, history, and a default value.
+---
+--- ```lua
+--- local completion = require('cc.completion')
+--- local history = { 'potato', 'orange', 'apple' }
+--- local choices = { 'apple', 'orange', 'banana', 'strawberry' }
+--- local completeFn = function(text)
+---     return completion.choice(text, choices)
+--- end
+---
+--- write('> ')
+--- print(read(nil, history, completeFn, 'app'))
+--- ```
+---
+--- # Changes
+---
+--- - Changed in version 1.74: Added `completeFn` parameter.
+--- - Changed in version 1.80pr1: Added `default` parameter.
+---
+--- @param replaceChar? string A character to replace each typed character with.
+--- This can be used for hiding passwords, for example.
+---
+--- @param history? string[] A table holding history items that can be scrolled back to with the up/down arrow keys.
+--- The oldest item is at index 1, while the newest item is at the highest index.
+---
+--- @param completeFn? fun(partial: string): string[]? A function to be used for completion.
+--- This function should take the partial text typed so far, and returns a list of possible completion options.
+---
+--- @param default? string Default text which should already be entered into the prompt.
+---
+--- @return string text The text typed in.
+---
+--- @see cc.completion
+function read(replaceChar, history, completeFn, default) end

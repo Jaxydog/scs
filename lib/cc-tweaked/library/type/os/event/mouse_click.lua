@@ -1,0 +1,27 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/mouse_click.html)
+---
+--- This event is fired when the terminal is clicked with a mouse.
+--- This event is only fired on advanced computers (including advanced turtles and pocket computers).
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `cc.os.MouseButton`: The mouse button that was clicked.
+--- 3. `integer`: The X-coordinate of the click.
+--- 4. `integer`: The Y-coordinate of the click.
+---
+--- # Usage
+---
+--- - Print the button and the coordinates whenever the mouse is clicked.
+---
+--- ```lua
+--- while true do
+---     local _, button, x, y = os.pullEvent('mouse_click')
+---
+---     print(('The mouse button %d was pressed at %d, %d'):format(button, x, y))
+--- end
+--- ```
+---
+--- @alias cc.os.Event.MouseClick 'mouse_click'

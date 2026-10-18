@@ -1,0 +1,29 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/event/char.html)
+---
+--- The `char` event is fired when a character is typed on the keyboard.
+---
+--- The `char` event is different to a keypress.
+--- Sometimes multiple keypresses may result in one character being typed (for instance, on some European keyboards).
+--- Similarly, some keys (e.g. `Ctrl`) do not have any corresponding character.
+--- The `key` event should be used if you want to listen to key presses themselves.
+---
+--- # Return values
+---
+--- 1. `string`: The event name.
+--- 2. `string`: The string representing the character that was pressed.
+---
+--- # Usage
+---
+--- - Print each character the user presses.
+---
+--- ```lua
+--- while true do
+---     local _, character = os.pullEvent('char')
+---
+---     print(character, 'was pressed')
+--- end
+--- ```
+---
+--- @alias cc.os.Event.Char 'char'
