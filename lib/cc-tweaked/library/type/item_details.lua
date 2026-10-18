@@ -115,7 +115,7 @@
 --- # Changes
 ---
 --- - New in version 1.64
---- - Changed in version 1.94.0: Add NBT hash, item tags, lore, enchantment and unbreakable flag.
+--- - Changed in version 1.94.0: Add NBT hash, item tags, lore, enchantment, and unbreakable flag.
 --- - Changed in version 1.100.9: Add item groups.
 --- - Changed in version 1.117.0: Add map color and potion effects.
 ---
@@ -141,7 +141,7 @@
 ---
 --- This uses the server's language.
 ---
---- This will typically be English on multi-player servers, and your current language on single player.
+--- This will typically be English on multiplayer servers, and your current language on single player.
 ---
 --- @field lore? string[] Additional lore about this item, as a list of strings.
 ---
@@ -149,7 +149,7 @@
 ---
 --- This is a mapping of tag name to true.
 ---
---- While the representation of tags is a little more complicated then a single list,
+--- While the representation of tags is a little more complicated than a single list,
 --- this makes it very easy to check if an item has a certain tag:
 ---
 --- ```lua
@@ -209,7 +209,7 @@
 ---
 --- This uses the server's language.
 ---
---- This will typically be English on multi-player servers, and your current language on single player.
+--- This will typically be English on multiplayer servers, and your current language on single player.
 
 --- Data contained by an enchantment table.
 ---
@@ -223,7 +223,7 @@
 ---
 --- This uses the server's language.
 ---
---- This will typically be English on multi-player servers, and your current language on single player.
+--- This will typically be English on multiplayer servers, and your current language on single player.
 ---
 --- @field level integer The level for this enchantment.
 
@@ -239,7 +239,7 @@
 ---
 --- This uses the server's language.
 ---
---- This will typically be English on multi-player servers, and your current language on single player.
+--- This will typically be English on multiplayer servers, and your current language on single player.
 ---
 --- @field duration? number The duration this effect will last for (if not instant), in seconds.
 ---

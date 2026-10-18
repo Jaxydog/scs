@@ -182,7 +182,7 @@ function Modem.isPresentRemote(name) end
 ---
 --- @param name? string The peripheral's name.
 ---
---- @return string? type The peripheral's type, or `nil` if it is not present.
+--- @return string? ... type The peripheral's type, or `nil` if it is not present.
 ---
 --- @see peripheral.getType()
 function Modem.getTypeRemote(name) end

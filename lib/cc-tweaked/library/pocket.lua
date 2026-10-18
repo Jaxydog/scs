@@ -4,7 +4,7 @@
 
 --- [Official Documentation](https://tweaked.cc/module/pocket.html)
 ---
---- Control the current pocket computer, adding or removing upgrades.
+--- Control the current pocket computer, adding, or removing upgrades.
 ---
 --- This API is only available on pocket computers.
 --- As such, you may use its presence to determine what kind of computer you are using:
@@ -24,7 +24,7 @@ pocket = {}
 --- replacing the existing one with that item if found.
 ---
 --- This inventory search starts from the player's currently selected slot,
---- allowing you to prioritise upgrades.
+--- allowing you to prioritize upgrades.
 ---
 --- @return boolean success If an item was equipped.
 --- @return string? reason The reason an item was not equipped.

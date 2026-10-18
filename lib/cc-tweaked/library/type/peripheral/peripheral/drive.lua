@@ -26,7 +26,8 @@ function Drive.isDiskPresent() end
 ---
 --- Returns the label of the disk in the drive if available.
 ---
---- @return string? label The label of the disk, or `nil` if either no disk is inserted or the disk doesn't have a label.
+--- @return string? label The label of the disk, or `nil` if either no disk is inserted or the
+--- disk doesn't have a label.
 function Drive.getDiskLabel() end
 
 --- [Official Documentation](https://tweaked.cc/peripheral/drive.html#v:setDiskLabel)
@@ -69,7 +70,8 @@ function Drive.hasAudio() end
 ---
 --- Returns the title of the inserted audio disk.
 ---
---- @return string | nil | false title The title of the audio, `false` if no disk is inserted, or `nil` if the disk has no audio.
+--- @return string | nil | false title The title of the audio, `false` if no disk is inserted, or `nil` if
+--- the disk has no audio.
 function Drive.getAudioTitle() end
 
 --- [Official Documentation](https://tweaked.cc/peripheral/drive.html#v:playAudio)

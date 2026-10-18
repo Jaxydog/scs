@@ -123,7 +123,8 @@ function Speaker.playSound(name, volume, pitch) end
 --- - New in version 1.100
 ---
 --- @param audio number[] A list of amplitudes.
---- @param volume? number The volume to play this audio at. If not given, defaults to the previous volume given to `playAudio`.
+--- @param volume? number The volume to play this audio at. If not given, defaults to the previous volume
+--- given to `playAudio`.
 ---
 --- @return boolean accepted If there was room to accept this audio data.
 function Speaker.playAudio(audio, volume) end

@@ -35,7 +35,8 @@ function FluidStorage.tanks() end
 ---
 --- - If the peripheral to transfer to doesn't exist or isn't a fluid container.
 ---
---- @param toName string The name of the peripheral/container to push to. This is the string given to `peripheral.wrap`, and displayed by the wired modem.
+--- @param toName string The name of the peripheral/container to push to. This is the string given
+--- to `peripheral.wrap`, and displayed by the wired modem.
 --- @param limit? number The maximum amount of fluid to move.
 --- @param fluidName? string The fluid to move. If not given, an arbitrary fluid will be chosen.
 ---
@@ -53,7 +54,8 @@ function FluidStorage.pushFluid(toName, limit, fluidName) end
 ---
 --- - If the peripheral to transfer to doesn't exist or isn't a fluid container.
 ---
---- @param fromName string The name of the peripheral/container to push to. This is the string given to `peripheral.wrap`, and displayed by the wired modem.
+--- @param fromName string The name of the peripheral/container to push to. This is the string given
+--- to `peripheral.wrap`, and displayed by the wired modem.
 --- @param limit? number The maximum amount of fluid to move.
 --- @param fluidName? string The fluid to move. If not given, an arbitrary fluid will be chosen.
 ---

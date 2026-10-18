@@ -47,7 +47,7 @@
 ---
 --- This uses the server's language.
 ---
---- This will typically be English on multi-player servers, and your current language on single player.
+--- This will typically be English on multiplayer servers, and your current language on single player.
 ---
 --- @field health? number The current health of the entity.
 ---
@@ -57,5 +57,5 @@
 ---
 --- This is a mapping of tag names to true.
 ---
---- While the representation of tags is a little more complicated then a single list,
+--- While the representation of tags is a little more complicated than a single list,
 --- this makes it very easy to check if an item has a certain tag:

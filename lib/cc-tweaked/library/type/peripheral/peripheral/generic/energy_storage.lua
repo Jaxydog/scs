@@ -7,7 +7,8 @@
 --- This works with energy storage blocks, as well as generators and machines which consume energy.
 ---
 --- > [!NOTE]
---- > Due to limitations with Forge's energy API, it is not possible to measure throughput (i.e. FE used/generated per tick).
+--- > Due to limitations with Forge's energy API, it is not possible to measure
+--- > throughput (i.e., FE used/generated per tick).
 ---
 --- # Changes
 ---
