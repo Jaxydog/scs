@@ -9,6 +9,7 @@ ComputerCraft
 ComputerCraft's
 CraftOS
 ender
+EmmyLua
 FE
 grey
 greyscale
