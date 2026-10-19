@@ -1,0 +1,18 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:unserializeJSON)
+---
+--- Options which control how a JSON object is parsed.
+---
+--- @class cc.textutils.UnserializeJSONOptions
+---
+--- @param nbt_style? boolean When true, this will accept stringified NBT strings, as produced by many commands.
+---
+--- Unlike JSON, the format of SNBT strings changes between Minecraft versions. This function should parse all SNBT
+--- strings returned by commands, but may not accept all valid SNBT strings.
+--- For instance, the `bool` and `uuid` functions are not currently supported.
+---
+--- @param parse_null? boolean When true, `null` will be parsed as `json_null`, rather than `nil`.
+---
+--- @param parse_empty_array? boolean When false, empty arrays will be parsed as a new table.
+--- By default (or when this value is true), they are parsed as `empty_json_array`.

@@ -1,0 +1,15 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:serializeJSON)
+---
+--- Options for serialization.
+---
+--- @class cc.textutils.SerializeJSONOptions
+---
+--- @field nbt_style? boolean Whether to produce NBT-style JSON (non-quoted keys) instead of standard JSON.
+---
+--- @field unicode_strings? boolean Whether to treat strings as containing UTF-8 characters instead of using the
+--- default 8-bit character set.
+---
+--- @field allow_repetitions? boolean Relax the check for recursive tables, allowing them to appear multiple
+--- times (as long as tables do not appear inside themselves).

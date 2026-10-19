@@ -1,0 +1,569 @@
+--- [Official Documentation](https://tweaked.cc/module/textutils.html)
+---
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html)
+---
+--- Helpful utilities for formatting and manipulating strings.
+---
+--- # Changes
+---
+--- - New in version 1.2
+textutils = {}
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:empty_json_array)
+---
+--- A table representing an empty JSON array, in order to distinguish it from an empty JSON object.
+---
+--- The contents of this table should not be modified.
+---
+--- # Usage
+---
+--- - Serialize an empty array.
+---
+--- ```lua
+--- textutils.serializeJSON(textutils.empty_json_array)
+--- ```
+---
+--- @see textutils.serializeJSON()
+--- @see textutils.unserializeJSON()
+textutils.empty_json_array = {}
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:json_null)
+---
+--- A table representing the JSON null value.
+---
+--- The contents of this table should not be modified.
+---
+--- # Usage
+---
+--- - Serialize a null value.
+---
+--- ```lua
+--- textutils.serializeJSON(textutils.json_null)
+--- ```
+---
+--- @see textutils.serializeJSON()
+--- @see textutils.unserializeJSON()
+textutils.json_null = {}
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:slowWrite)
+---
+--- Slowly writes string text at current cursor position, character-by-character.
+---
+--- Like `_G.write`, this does not insert a newline at the end.
+---
+--- # Usage
+---
+--- - Slowly write 'Hello, world!' to the screen.
+---
+--- ```lua
+--- textutils.slowWrite('Hello, world!', 5)
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.3
+---
+--- @param text string The the text to write to the screen.
+--- @param rate? number The number of characters to write each second, defaults to 20.
+function textutils.slowWrite(text, rate) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:slowPrint)
+---
+--- Slowly prints string text at current cursor position, character-by-character.
+---
+--- Like `print`, this inserts a newline after printing.
+---
+--- # Usage
+---
+--- - Slowly print 'Hello, world!' to the screen.
+---
+--- ```lua
+--- textutils.slowPrint('Hello, world!', 5)
+--- ```
+---
+--- @param text string The the text to write to the screen.
+--- @param rate number The number of characters to write each second, defaults to 20.
+function textutils.slowPrint(text, rate) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:formatTime)
+---
+--- Takes input time and formats it in a more readable format such as `6:30 PM`.
+---
+--- # Usage
+---
+--- - Print the current in-game time as a 12-hour clock time.
+---
+--- ```lua
+--- print(textutils.formatTime(os.time()))
+--- ```
+---
+--- @param time number The time to format, as provided by `os.time`.
+--- @param twentyFourHour? boolean Whether to format this as a 24-hour clock (`18:30`) rather than
+--- a 12-hour one (`6:30 AM`)
+---
+--- @return string time The formatted time.
+function textutils.formatTime(time, twentyFourHour) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:pagedPrint)
+---
+--- Prints a given string to the display.
+---
+--- If the action can be completed without scrolling, it acts much the same as `print`; otherwise, it will throw up
+--- a "Press any key to continue" prompt at the bottom of the display.
+--- Each press will cause it to scroll down and write a single line more before prompting again, if need be.
+---
+--- # Usage
+---
+--- - Generate several lines of text and print them, paging once at the bottom of the terminal.
+---
+--- ```lua
+--- local lines = table.create(30, 0)
+---
+--- for i = 1, 30, 1 do
+---     lines[i] = ('This is line #%d'):format(i)
+--- end
+---
+--- local message = table.concat(lines, '\n')
+--- local _, height = term.getCursorPos()
+---
+--- textutils.pagedPrint(message, height - 2)
+--- ```
+---
+--- @param text string The text to print to the screen.
+--- @param freeLines? number The number of lines which will be automatically scrolled before the first prompt
+--- appears (meaning `freeLines + 1` lines will be printed).
+--- This can be set to the cursor's `y` position `-2` to always try to fill the screen.
+--- Defaults to 0, meaning only one line is displayed before prompting.
+function textutils.pagedPrint(text, freeLines) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:tabulate)
+---
+--- Prints tables in a structured form.
+---
+--- This accepts multiple arguments, either a table or a number. When encountering a table, this will be treated as
+--- a table row, with each column width being auto-adjusted.
+---
+--- When encountering a number, this sets the text color of the subsequent rows to it.
+---
+--- # Usage
+---
+--- - Print multiple tables in color.
+---
+--- ```lua
+--- textutils.tabulate(
+---     colors.orange, { '1', '2', '3' },
+---     colors.lightBlue, { 'A', 'B', 'C' }
+--- )
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.3
+---
+--- @param ... (string | number)[] | integer The rows and text colors to display.
+function textutils.tabulate(...) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:pagedTabulate)
+---
+--- Prints tables in a structured form, stopping, and prompting for input should the result not fit on the terminal.
+---
+--- This functions identically to `textutils.tabulate`, but will prompt for user input should the whole output not
+--- fit on the display.
+---
+--- # Usage
+---
+--- - Generate a long table, tabulate it, and print it to the screen.
+---
+--- ```lua
+--- local rows = {}
+---
+--- for i = 1, 30, 1 do
+---     rows[i] = { ('Row #%d'):format(i), math.random(1, 400) }
+--- end
+---
+--- textutils.pagedTabulate(colors.orange, { 'Column', 'Value' }, colors.lightBlue, table.unpack(rows))
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.3
+---
+--- @param ... (string | number)[] | integer The rows and text colors to display.
+---
+--- @see textutils.pagedPrint()
+--- @see textutils.tabulate()
+function textutils.pagedTabulate(...) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:serialize)
+---
+--- Convert a Lua object into a textual representation, suitable for saving in a file or pretty-printing.
+---
+--- # Throws
+---
+--- - If the object contains a value which cannot be serialized.
+--- This includes functions and tables which appear multiple times.
+---
+--- # Usage
+---
+--- - Serialize a basic table.
+---
+--- ```lua
+--- textutils.serialize({ 1, 2, 3, a = 1, ['another key'] = { true } })
+--- ```
+---
+--- - Serialize with additional options.
+---
+--- ```lua
+--- local tbl = { 1, 2, 3 }
+---
+--- textutils.serialize({ tbl, tbl }, { allow_repetitions = true })
+---
+--- print(textutils.serialize(tbl, { compact = true }))
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.3
+--- - Changed in version 1.97.0: Added `opts` argument.
+---
+--- @param t any The object to serialize.
+--- @param opts? cc.textutils.SerializeOptions Options for serialization.
+---
+--- @return string serialized The serialized representation.
+function textutils.serialize(t, opts) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:serialise)
+---
+--- Convert a Lua object into a textual representation, suitable for saving in a file or pretty-printing.
+---
+--- # Throws
+---
+--- - If the object contains a value which cannot be serialised.
+--- This includes functions and tables which appear multiple times.
+---
+--- # Usage
+---
+--- - Serialise a basic table.
+---
+--- ```lua
+--- textutils.serialise({ 1, 2, 3, a = 1, ['another key'] = { true } })
+--- ```
+---
+--- - Serialise with additional options.
+---
+--- ```lua
+--- local tbl = { 1, 2, 3 }
+---
+--- textutils.serialise({ tbl, tbl }, { allow_repetitions = true })
+---
+--- print(textutils.serialise(tbl, { compact = true }))
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.3
+--- - Changed in version 1.97.0: Added `opts` argument.
+---
+--- @param t any The object to serialise.
+--- @param opts? cc.textutils.SerializeOptions Options for serialisation.
+---
+--- @return string serialized The serialised representation.
+function textutils.serialise(t, opts) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:unserialize)
+---
+--- Converts a serialized string back into a reassembled Lua object.
+---
+--- This is mainly used together with `textutils.serialize`.
+---
+--- # Changes
+---
+--- - New in version 1.3
+---
+--- @param s string The serialized string to deserialize.
+---
+--- @return any? value The deserialized object, or `nil` if the object could not be deserialized.
+function textutils.unserialize(s) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:unserialise)
+---
+--- Converts a serialised string back into a reassembled Lua object.
+---
+--- This is mainly used together with `textutils.serialise`.
+---
+--- # Changes
+---
+--- - New in version 1.3
+---
+--- @param s string The serialised string to deserialise.
+---
+--- @return any? value The deserialised object, or `nil` if the object could not be deserialised.
+function textutils.unserialise(s) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:serializeJSON)
+---
+--- Returns a JSON representation of the given data.
+---
+--- This is largely intended for interacting with various functions from the `commands` API, though may also be used
+--- in making `http` requests.
+---
+--- Lua has a rather different data model to JavaScript/JSON.
+--- As a result, some Lua values do not serialize cleanly into JSON.
+---
+--- - Lua tables can contain arbitrary key-value pairs, but JSON only accepts arrays and objects (which
+--- require a string key).
+--- When serializing a table, if it only has numeric keys, then it will be treated as an array.
+--- Otherwise, the table will be serialized to an object using the string keys.
+--- Non-string keys (such as numbers or tables) will be dropped.
+---
+--- A consequence of this is that an empty table will always be serialized to an object, not an array.
+--- `textutils.empty_json_array` may be used to express an empty array.
+---
+--- - Lua strings are a sequence of raw bytes, and do not have any specific encoding. However, JSON strings must be
+--- valid Unicode. By default, non-ASCII characters in a string are serialized to their Unicode code point
+--- (for instance, "\xfe" is converted to "\u00fe"). The `unicode_strings` option may be set to treat all input strings
+--- as UTF-8.
+---
+--- - Lua does not distinguish between missing keys (`undefined` in JS) and ones explicitly set to `null`.
+--- As a result, `{ x = nil }` is serialized to `{}`. `textutils.json_null` may be used to get an explicit `null`
+--- value (`{ x = textutils.json_null }` will serialise to `{"x": null}`).
+---
+--- # Throws
+---
+--- - If the object contains a value which cannot be serialized. This includes functions and tables which appear
+--- multiple times.
+---
+--- # Usage
+---
+--- - Serialize a simple object.
+---
+--- ```lua
+--- textutils.serializeJSON({ values = { 1, '2', true } })
+--- ```
+---
+--- - Serialize an object to an NBT-style string.
+---
+--- ```lua
+--- textutils.serializeJSON({ values = { 1, '2', true } }, { nbt_style = true })
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.7
+--- - Changed in version 1.106.0: Added `options` overload and `unicode_strings` option.
+--- - Changed in version 1.109.0: Added `allow_repetitions` option.
+---
+--- @param t any The value to serialize. Like `textutils.serialize`, this should not contain recursive tables
+--- or functions.
+--- @param options? cc.textutils.SerializeJSONOptions Options for serialization.
+---
+--- @return string json The JSON representation of the input.
+---
+--- @see textutils.empty_json_array
+--- @see textutils.json_null
+---
+--- @overload fun(t: any, nbtStyle: boolean): string
+function textutils.serializeJSON(t, options) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:serialiseJSON)
+---
+--- Returns a JSON representation of the given data.
+---
+--- This is largely intended for interacting with various functions from the `commands` API, though may also be used
+--- in making `http` requests.
+---
+--- Lua has a rather different data model to JavaScript/JSON.
+--- As a result, some Lua values do not serialise cleanly into JSON.
+---
+--- - Lua tables can contain arbitrary key-value pairs, but JSON only accepts arrays and objects (which
+--- require a string key).
+--- When serialising a table, if it only has numeric keys, then it will be treated as an array.
+--- Otherwise, the table will be serialised to an object using the string keys.
+--- Non-string keys (such as numbers or tables) will be dropped.
+---
+--- A consequence of this is that an empty table will always be serialised to an object, not an array.
+--- `textutils.empty_json_array` may be used to express an empty array.
+---
+--- - Lua strings are a sequence of raw bytes, and do not have any specific encoding. However, JSON strings must be
+--- valid Unicode. By default, non-ASCII characters in a string are serialised to their Unicode code point
+--- (for instance, "\xfe" is converted to "\u00fe"). The `unicode_strings` option may be set to treat all input strings
+--- as UTF-8.
+---
+--- - Lua does not distinguish between missing keys (`undefined` in JS) and ones explicitly set to `null`.
+--- As a result, `{ x = nil }` is serialised to `{}`. `textutils.json_null` may be used to get an explicit `null`
+--- value (`{ x = textutils.json_null }` will serialise to `{"x": null}`).
+---
+--- # Throws
+---
+--- - If the object contains a value which cannot be serialised. This includes functions and tables which appear
+--- multiple times.
+---
+--- # Usage
+---
+--- - Serialize a simple object.
+---
+--- ```lua
+--- textutils.serialiseJSON({ values = { 1, '2', true } })
+--- ```
+---
+--- - Serialize an object to an NBT-style string.
+---
+--- ```lua
+--- textutils.serialiseJSON({ values = { 1, '2', true } }, { nbt_style = true })
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.7
+--- - Changed in version 1.106.0: Added `options` overload and `unicode_strings` option.
+--- - Changed in version 1.109.0: Added `allow_repetitions` option.
+---
+--- @param t any The value to serialise. Like `textutils.serialise`, this should not contain recursive tables
+--- or functions.
+--- @param options? cc.textutils.SerializeJSONOptions Options for serialisation.
+---
+--- @return string json The JSON representation of the input.
+---
+--- @see textutils.empty_json_array
+--- @see textutils.json_null
+---
+--- @overload fun(t: any, nbtStyle: boolean): string
+function textutils.serialiseJSON(t, options) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:unserializeJSON)
+---
+--- Converts a serialized JSON string back into a reassembled Lua object.
+---
+--- This may be used with `textutils.serializeJSON`, or when communicating with command blocks or web APIs.
+---
+--- If a `null` value is encountered, it is converted into `nil`. It can be converted into `textutils.json_null` with
+--- the `parse_null` option.
+---
+--- If an empty array is encountered, it is converted into `textutils.empty_json_array`. It can be converted into
+--- a new empty table with the `parse_empty_array` option.
+---
+--- # Usage
+---
+--- - Deserialize a basic JSON object.
+---
+--- ```lua
+--- textutils.unserializeJSON('{"name": "Steve", "age": null}')
+--- ```
+---
+--- - Deserialize a basic JSON object, returning null values as `json_null`.
+---
+--- ```lua
+--- textutils.unserializeJSON('{"name": "Steve", "age": null}', { parse_null = true })
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.87.0
+--- - Changed in version 1.100.6: Added `parse_empty_array` option.
+---
+--- @param s string The serialized string to deserialize.
+--- @param options? cc.textutils.UnserializeJSONOptions Options which control how this JSON object is parsed.
+--- @return any? value The deserialized object.
+--- @return string? reason A message describing why the JSON string is invalid.
+---
+--- @see textutils.empty_json_array
+--- @see textutils.json_null
+---
+--- @return_overload any
+--- @return_overload nil, string
+function textutils.unserializeJSON(s, options) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:unserialiseJSON)
+---
+--- Converts a serialised JSON string back into a reassembled Lua object.
+---
+--- This may be used with `textutils.serialiseJSON`, or when communicating with command blocks or web APIs.
+---
+--- If a `null` value is encountered, it is converted into `nil`. It can be converted into `textutils.json_null` with
+--- the `parse_null` option.
+---
+--- If an empty array is encountered, it is converted into `textutils.empty_json_array`. It can be converted into
+--- a new empty table with the `parse_empty_array` option.
+---
+--- # Usage
+---
+--- - Deserialise a basic JSON object.
+---
+--- ```lua
+--- textutils.unserialiseJSON('{"name": "Steve", "age": null}')
+--- ```
+---
+--- - Deserialise a basic JSON object, returning null values as `json_null`.
+---
+--- ```lua
+--- textutils.unserialiseJSON('{"name": "Steve", "age": null}', { parse_null = true })
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.87.0
+--- - Changed in version 1.100.6: Added `parse_empty_array` option.
+---
+--- @param s string The serialised string to deserialise.
+--- @param options? cc.textutils.UnserializeJSONOptions Options which control how this JSON object is parsed.
+--- @return any? value The deserialised object.
+--- @return string? reason A message describing why the JSON string is invalid.
+---
+--- @see textutils.empty_json_array
+--- @see textutils.json_null
+---
+--- @return_overload any
+--- @return_overload nil, string
+function textutils.unserialiseJSON(s, options) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:urlEncode)
+---
+--- Replaces certain characters in a string to make it safe for use in URLs or POST data.
+---
+--- # Usage
+---
+--- - Encode a URL.
+---
+--- ```lua
+--- print(('https://example.com/?view=%s'):format(textutils.urlEncode('some text&things')))
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.31
+---
+--- @param str string The string to encode.
+---
+--- @return string encoded The encoded string.
+function textutils.urlEncode(str) end
+
+--- [Official Documentation](https://tweaked.cc/module/textutils.html#v:complete)
+---
+--- Provides a list of possible completions for a partial Lua expression.
+---
+--- If the completed element is a table, suggestions will have `.` appended to them.
+--- Similarly, functions have `(` appended to them.
+---
+--- # Usage
+---
+--- - Complete the string 'pa' using the current environment.
+---
+--- ```lua
+--- textutils.complete('pa', _ENV)
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.74
+---
+--- @param searchText string The partial expression to complete, such as a variable name or table index.
+--- @param searchTable? table The table to find variables in, defaulting to the global environment (`_G`).
+--- The function also searches the "parent" environment via the `__index` metatable field.
+---
+--- @return string[] completions The (possibly empty) list of completions.
+---
+--- @see read()
+--- @see shell.setCompletionFunction()
+function textutils.complete(searchText, searchTable) end
