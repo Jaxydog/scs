@@ -16,13 +16,17 @@ deserialisation
 deserialise
 deserialised
 deserialising
+DFPWM
 EmmyLua
 ender
 FE
+GreaseMonkey
 grey
 greyscale
 hashbang
 hashbangs
+kibibytes
+LionRay
 LuaLS
 metatable
 metatables
@@ -39,3 +43,4 @@ serialising
 SNBT
 trilateration
 vararg
+Wav

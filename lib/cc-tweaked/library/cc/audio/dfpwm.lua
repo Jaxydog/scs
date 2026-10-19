@@ -1,0 +1,151 @@
+--- [Official Documentation](https://tweaked.cc/library/cc.audio.dfpwm.html)
+---
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/library/cc.audio.dfpwm.html)
+---
+--- Convert between streams of DFPWM audio data and a list of amplitudes.
+---
+--- DFPWM (Dynamic Filter Pulse Width Modulation) is an audio codec designed by GreaseMonkey. It's a relatively compact
+--- format compared to raw PCM data, only using 1 bit per sample, but is simple enough to encode and decode in
+--- real time.
+---
+--- Typically DFPWM audio is read from the filesystem or a web request as a string, and converted to a format suitable
+--- for `speaker.playAudio`.
+---
+--- ## Encoding and decoding files
+---
+--- This module exposes two key functions, `make_decoder` and `make_encoder`, which construct a new decoder or encoder.
+--- The returned encoder/decoder is itself a function, which converts between the two kinds of data.
+---
+--- These encoders and decoders have lots of hidden state, so you should be careful to use the same encoder or decoder
+--- for a specific audio stream. Typically you will want to create a decoder for each stream of audio you read, and an
+--- encoder for each one you write.
+---
+--- ## Converting audio to DFPWM
+---
+--- DFPWM is not a popular file format and so standard audio processing tools may not have an option to export to it.
+--- Instead, you can convert audio files online using `music.madefor.cc`, the LionRay Wav Converter Java application
+--- or FFmpeg 5.1 or later.
+---
+--- # Usage
+---
+--- - Reads data in chunks, decodes them, and then doubles the audio speed. Then, re-encode the audio and save it to
+--- a file that can then be played with the `speaker` program.
+---
+--- ```lua
+--- local dfpwm = require('cc.audio.dfpwm')
+---
+--- local encoder = dfpwm.make_encoder()
+--- local decoder = dfpwm.make_decoder()
+---
+--- local out = fs.open('speedy.dfpwm', 'wb')
+---
+--- for input in io.lines('data/example.dfpwm', 16 * 1024 * 2) do
+---     local decoded = decoder(input)
+---     local output = {}
+---
+---     for i = 1, #decoded, 2 do
+---         local value_1, value_2 = decoded[i], decoded[i + 1]
+---
+---         output[(i + 1) / 2] = (value_1 + value_2) / 2
+---     end
+---
+---     out.write(encoder(output))
+---
+---     sleep(0)
+--- end
+---
+--- out.close()
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.100.0
+---
+--- @see cc.peripheral.Peripheral.Speaker.playAudio()
+local dfpwm = {}
+
+--- [Official Documentation](https://tweaked.cc/library/cc.audio.dfpwm.html#v:make_encoder)
+---
+--- Create a new encoder for converting PCM audio data into DFPWM.
+---
+--- The returned encoder is itself a function. This function accepts a table of amplitude data
+--- between `-128` and `127` and returns the encoded DFPWM data.
+---
+--- > [!WARNING]
+--- > Encoders have lots of internal state which tracks the state of the current stream.
+--- > If you reuse an encoder for multiple streams, or use different encoders for the same stream, the
+--- > resulting audio may not sound correct.
+---
+--- @return fun(pcm: integer[]): string encoder The encoder function.
+---
+--- @see encode()
+function dfpwm.make_encoder() end
+
+--- [Official Documentation](https://tweaked.cc/library/cc.audio.dfpwm.html#v:encode)
+---
+--- A convenience function for encoding a complete file of audio at once.
+---
+--- This should only be used for complete pieces of audio. If you are writing multiple chunks to the same place,
+--- you should use an encoder returned by `make_encoder` instead.
+---
+--- @param input integer[] The table of amplitude data.
+---
+--- @return string data The encoded DFPWM data.
+---
+--- @see make_encoder()
+function dfpwm.encode(input) end
+
+--- [Official Documentation](https://tweaked.cc/library/cc.audio.dfpwm.html#v:make_decoder)
+---
+--- Create a new decoder for converting DFPWM into PCM audio data.
+---
+--- The returned decoder is itself a function. This function accepts a string and returns a table of amplitudes,
+--- each value between `-128` and `127`.
+---
+--- > [!WARNING]
+--- > Decoders have lots of internal state which tracks the state of the current stream.
+--- > If you reuse a decoder for multiple streams, or use different decoders for the same stream, the
+--- > resulting audio may not sound correct.
+---
+--- # Usage
+---
+--- - Reads a file in blocks of 16 kibibytes (the speaker can accept a maximum of 128×1024 samples), decodes them and
+--- then plays them through the speaker.
+---
+--- ```lua
+--- local dfpwm = require('cc.audio.dfpwm')
+--- local speaker = peripheral.find('speaker')
+---
+--- local decoder = dfpwm.make_decoder()
+---
+--- for input in io.lines('data/example.dfpwm', 16 * 1024) do
+---     local decoded = decoder(input)
+---
+---     while not speaker.playAudio(decoded) do
+---         os.pullEvent('speaker_audio_empty')
+---     end
+--- end
+--- ```
+---
+--- @return fun(dfpwm: string): integer[] decoder The decoder function.
+---
+--- @see decode()
+function dfpwm.make_decoder() end
+
+--- [Official Documentation](https://tweaked.cc/library/cc.audio.dfpwm.html#v:decode)
+---
+--- A convenience function for decoding a complete file of audio at once.
+---
+--- This should only be used for short files. For larger files, one should read the file in chunks and
+--- process it using `make_decoder`.
+---
+--- @param input string The DFPWM data to convert.
+---
+--- @return integer[] data The produced amplitude data.
+---
+--- @see make_decoder()
+function dfpwm.decode(input) end
+
+return dfpwm
