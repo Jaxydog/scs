@@ -9,6 +9,8 @@ ComputerCraft
 ComputerCraft's
 CraftOS
 CraftOS's
+datapack
+datapacks
 deserialisation
 deserialise
 deserialised
@@ -26,6 +28,7 @@ metatables
 multishell
 NBT
 noteblock
+pickaxe
 rednet
 redstone
 serialisation

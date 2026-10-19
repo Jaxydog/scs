@@ -1,0 +1,5 @@
+--- [Official Documentation](https://tweaked.cc/module/turtle.html#v:dig)
+---
+--- @alias cc.turtle.Side
+--- | 'left'
+--- | 'right'
