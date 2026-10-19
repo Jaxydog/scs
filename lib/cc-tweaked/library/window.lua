@@ -1,0 +1,79 @@
+--- [Official Documentation](https://tweaked.cc/module/window.html)
+---
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/window.html)
+---
+--- A terminal redirect occupying a smaller area of an existing terminal. This allows for easy definition of spaces
+--- within the display that can be written/drawn to, then later redrawn/repositioned/etc. as needed. The API itself
+--- contains only one function, `window.create`, which returns the windows themselves.
+---
+--- Windows are considered terminal objects - as such, they have access to nearly all the commands in the term API
+--- (plus a few extras of their own, listed within said API) and are valid targets to redirect to.
+---
+--- Each window has a "parent" terminal object, which can be the computer's own display, a monitor, another window, or
+--- even other, user-defined terminal objects. Whenever a window is rendered to, the actual screen-writing is performed
+--- via that parent (or, if that has one too, then that parent, and so forth). Bear in mind that the cursor of a
+--- window's parent will hence be moved around etc. when writing a given child window.
+---
+--- Windows retain a memory of everything rendered "through" them (hence acting as display buffers), and if the
+--- parent's display is wiped, the window's content can be easily redrawn later. A window may also be flagged as
+--- invisible, preventing any changes to it from being rendered until it's flagged as visible once more.
+---
+--- A parent terminal object may have multiple children assigned to it, and windows may overlap. For example, the
+--- multishell system functions by assigning each tab a window covering the screen, each using the starting terminal
+--- display as its parent, and only one of which is visible at a time.
+---
+--- # Changes
+---
+--- - New in version 1.6
+window = {}
+
+--- [Official Documentation](https://tweaked.cc/module/window.html#v:create)
+---
+--- Returns a terminal object that is a space within the specified parent terminal object.
+--- This can then be used (or even redirected to) in the same manner as eg a wrapped monitor.
+--- Refer to the term API for a list of functions available to it.
+---
+--- `term` itself may not be passed as the parent, though `term.native` is acceptable.
+--- Generally, `term.current` or a wrapped monitor will be most suitable, though windows may even have other windows
+--- assigned as their parents.
+---
+--- # Usage
+---
+--- - Create a small window, fill it with red, and write some text to it.
+---
+--- ```lua
+--- local w = window.create(term.current(), 1, 1, 20, 5)
+---
+--- w.setBackgroundColour(colors.red)
+--- w.setTextColour(colors.white)
+---
+--- w.clear()
+---
+--- w.write('Testing my window!')
+--- ```
+---
+--- - Create a small window and redirect to it.
+---
+--- ```lua
+--- local w = window.create(term.current(), 1, 1, 25, 5)
+---
+--- term.redirect(w)
+---
+--- print('Writing some long text which will wrap around and show the bounds of this window.')
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.6
+---
+--- @param parent cc.term.Redirect The parent terminal redirect to draw to.
+--- @param x integer The x coordinate this window is drawn at in the parent terminal.
+--- @param y integer The y coordinate this window is drawn at in the parent terminal.
+--- @param width integer The width of this window.
+--- @param height integer The height of this window.
+--- @param startVisible? boolean Whether this window is visible by default. Defaults to `true`.
+---
+--- @return cc.window.Window window The constructed window.
+function window.create(parent, x, y, width, height, startVisible) end
