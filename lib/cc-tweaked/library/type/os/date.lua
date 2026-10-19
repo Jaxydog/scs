@@ -4,7 +4,7 @@
 ---
 --- A table returned via `os.date`.
 ---
---- @alias cc.os.Date
+--- @class cc.os.Date
 ---
 --- @field year integer The year.
 ---
