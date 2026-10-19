@@ -8,11 +8,14 @@ colours
 ComputerCraft
 ComputerCraft's
 CraftOS
+CraftOS's
 ender
 EmmyLua
 FE
 grey
 greyscale
+hashbang
+hashbangs
 LuaLS
 metatable
 metatables
