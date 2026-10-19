@@ -1,0 +1,17 @@
+--- @meta
+
+--- Data contained by an enchantment table.
+---
+--- @class cc.ItemDetails.Enchantment
+---
+--- @field name string The namespaced ID for this enchantment, e.g. `minecraft:efficiency`.
+---
+--- See the Minecraft wiki for a list of vanilla enchantment IDs.
+---
+--- @field displayName string The translated display name of the enchantment.
+---
+--- This uses the server's language.
+---
+--- This will typically be English on multiplayer servers, and your current language on single player.
+---
+--- @field level integer The level for this enchantment.

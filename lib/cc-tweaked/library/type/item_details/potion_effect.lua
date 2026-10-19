@@ -1,0 +1,19 @@
+--- @meta
+
+--- Data contained by a potion effect table.
+---
+--- @class cc.ItemDetails.PotionEffect
+---
+--- @field name string The namespaced ID for this potion effect, e.g. `minecraft:regeneration`.
+---
+--- See the Minecraft wiki for a list of vanilla potion effect IDs.
+---
+--- @field displayName string The translated display name of the potion effect.
+---
+--- This uses the server's language.
+---
+--- This will typically be English on multiplayer servers, and your current language on single player.
+---
+--- @field duration? number The duration this effect will last for (if not instant), in seconds.
+---
+--- @field potency? integer The potency of this potion.

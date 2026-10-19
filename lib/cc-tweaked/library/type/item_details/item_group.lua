@@ -1,0 +1,15 @@
+--- @meta
+
+--- Data contained by an item group table.
+---
+--- @class cc.ItemDetails.ItemGroup
+---
+--- @field name string The namespaced ID for this item group, e.g. `minecraft:building_blocks`.
+---
+--- See the Minecraft wiki for a list of vanilla item group IDs.
+---
+--- @field displayName string The translated display name of the item group.
+---
+--- This uses the server's language.
+---
+--- This will typically be English on multiplayer servers, and your current language on single player.
