@@ -1,0 +1,90 @@
+--- [Official Documentation](https://tweaked.cc/library/cc.base64.html)
+---
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/library/cc.base64.html)
+---
+--- The `cc.base64` module provides functions for converting binary data to and from Base64.
+---
+--- # Usage
+---
+--- - Encode and decode a string from Base64.
+---
+--- ```lua
+--- local base64 = require('cc.base64')
+---
+--- print(base64.encode('Hello, world'))
+---
+--- print(base64.decode('SGVsbG8sIHdvcmxk'))
+--- ```
+---
+--- # Changes
+---
+--- - New in version 1.119.0
+local base64 = {}
+
+--- [Official Documentation](https://tweaked.cc/library/cc.base64.html#v:encode)
+---
+--- Encode a binary string to Base64.
+---
+--- # Usage
+---
+--- - Convert a string to Base64.
+---
+--- ```lua
+--- local base64 = require('cc.base64')
+---
+--- print(base64.encode('Hello, world!'))
+--- ```
+---
+--- - Convert a string to `base64url`, an alternative to Base64 where the string is encoded with `"-_"` instead
+--- of `"+/"`. This allows the string to be more easily used in URLs, though the padding `=` will still need escaping
+--- with `textutils.urlEncode`.
+---
+--- ```lua
+--- local base64 = require('cc.base64')
+---
+--- print(base64.encode('Test: \255\230', '-_'))
+--- ```
+---
+--- @param str string The binary data to encode.
+--- @param altChars? string A string of length 2, used to encode the 62nd and 63rd bit (default `'+/'`).
+---
+--- @return string data The Base64 encoded data.
+function base64.encode(str, altChars) end
+
+--- [Official Documentation](https://tweaked.cc/library/cc.base64.html#v:decode)
+---
+--- Decode a Base64-encoded string back to its original data.
+---
+--- This function requires the data to be valid Base64 with the trailing padding bytes.
+---
+--- # Usage
+---
+--- - Decode a string from Base64.
+---
+--- ```lua
+--- local base64 = require('cc.base64')
+---
+--- print(base64.decode('SGVsbG8sIHdvcmxk'))
+--- ```
+---
+--- - Decode a string from `base64url`.
+---
+--- ```lua
+--- local base64 = require('cc.base64')
+---
+--- print(base64.decode('VGVzdDog_-Y=', '-_'))
+--- ```
+---
+--- @param str string The Base64-encoded data to decode.
+--- @param altChars? string A string of length 2, used to encode the 62nd and 63rd bit (default `'+/'`).
+---
+--- @return string? data The decoded data.
+--- @return string? reason The reason the data failed to decode.
+---
+--- @return_overload string
+--- @return_overload nil, string
+function base64.decode(str, altChars) end
+
+return base64
