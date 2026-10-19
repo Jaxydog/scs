@@ -1,0 +1,12 @@
+--- @meta
+
+--- [Official Documentation](https://tweaked.cc/module/settings.html#v:define)
+---
+--- @class cc.settings.Options
+---
+--- @field description? string A description which may be printed when running the `set` program.
+---
+--- @field default? any A default value, which is returned by `settings.get` if the setting has not been changed.
+---
+--- @field type? cc.settings.Options.Type Require values to be of this type. Setting the value to another type will error.
+--- Must be one of: `'number'`, `'string'`, `'boolean'`, or `'table'`.
