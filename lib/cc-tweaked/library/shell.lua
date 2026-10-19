@@ -229,7 +229,7 @@ function shell.programs(includeHidden) end
 ---
 --- - New in version 1.74
 ---
---- @param sLine string The input to complete.
+--- @param line string The input to complete.
 ---
 --- @return string[]? completions The list of possible completions.
 ---
@@ -237,7 +237,7 @@ function shell.programs(includeHidden) end
 --- @see shell.completeProgram()
 --- @see shell.setCompletionFunction()
 --- @see shell.getCompletionInfo()
-function shell.complete(sLine) end
+function shell.complete(line) end
 
 --- [Official Documentation](https://tweaked.cc/module/shell.html#v:completeProgram)
 ---
