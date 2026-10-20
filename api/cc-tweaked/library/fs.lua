@@ -387,14 +387,18 @@ function fs.delete(path) end
 --- file.close() -- Remember to call close, otherwise changes may not be written.
 --- ```
 ---
---- @overload fun(path: string, mode: cc.fs.OpenMode.ReadOnly): cc.fs.ReadHandle
---- @overload fun(path: string, mode: cc.fs.OpenMode.WriteOnly): cc.fs.WriteHandle
---- @overload fun(path: string, mode: cc.fs.OpenMode.ReadWriteOnly): cc.fs.ReadWriteHandle
+--- @overload fun(path: string, mode: cc.fs.OpenMode.ReadOnly): cc.fs.ReadHandle?, string?
+--- @overload fun(path: string, mode: cc.fs.OpenMode.WriteOnly): cc.fs.WriteHandle, string?
+--- @overload fun(path: string, mode: cc.fs.OpenMode.ReadWriteOnly): cc.fs.ReadWriteHandle, string?
 ---
 --- @param path string The path to the file to open.
 --- @param mode cc.fs.OpenMode The mode to open the file with.
 ---
---- @return cc.fs.ReadHandle | cc.fs.WriteHandle | cc.fs.ReadWriteHandle file A file handle object for the file.
+--- @return cc.fs.ReadHandle | cc.fs.WriteHandle | cc.fs.ReadWriteHandle | nil file A file handle object for the file.
+--- @return string? reason A message explaining why the file cannot be opened.
+---
+--- @return_overload cc.fs.ReadHandle | cc.fs.WriteHandle | cc.fs.ReadWriteHandle
+--- @return_overload nil, string
 function fs.open(path, mode) end
 
 --- [Official Documentation](https://tweaked.cc/module/fs.html#v:getDrive)
