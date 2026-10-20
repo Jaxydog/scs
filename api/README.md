@@ -1,6 +1,6 @@
-# Lua Libraries
+# Lua API Libraries
 
-This directory contains various definition libraries used by
+This directory contains various API definition libraries used by
 this project for the sake of documentation and in-editor autocompletion.
 
 None of these libraries should contain actual code,

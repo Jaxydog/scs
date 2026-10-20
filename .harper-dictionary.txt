@@ -36,6 +36,7 @@ noteblock
 pickaxe
 rednet
 redstone
+SCS
 serialisation
 serialise
 serialised

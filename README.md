@@ -4,7 +4,7 @@ This is a public code repository for the fictional company,
 Shell Computing Solutions (SCS).
 
 All relevant code is contained within the `lua` directory,
-with additional API definitions defined in the `lib` directory.
+with additional API definitions defined in the `api` directory.
 
 ## Testing
 
