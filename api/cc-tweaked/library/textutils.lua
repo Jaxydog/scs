@@ -132,7 +132,7 @@ function textutils.formatTime(time, twentyFourHour) end
 --- ```
 ---
 --- @param text string The text to print to the screen.
---- @param freeLines? number The number of lines which will be automatically scrolled before the first prompt
+--- @param freeLines? integer The number of lines which will be automatically scrolled before the first prompt
 --- appears (meaning `freeLines + 1` lines will be printed).
 --- This can be set to the cursor's `y` position `-2` to always try to fill the screen.
 --- Defaults to 0, meaning only one line is displayed before prompting.
