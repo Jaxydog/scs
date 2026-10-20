@@ -27,6 +27,10 @@ end
 
 shell.setPath(path)
 
+local complete = require('cc.shell.completion')
+
+shell.setCompletionFunction(fs.combine(root, '/programs/utility/cat.lua'), complete.build(complete.file))
+
 _G.scs = {
     settings = require('rom.settings'),
 }
