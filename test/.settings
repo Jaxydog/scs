@@ -1,0 +1,6 @@
+{
+  [ "list.show_hidden" ] = true,
+  [ "motd.enable" ] = false,
+  [ "scs.root" ] = "/.scs-root",
+  [ "scs.test" ] = true,
+}

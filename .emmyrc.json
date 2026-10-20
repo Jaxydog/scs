@@ -4,8 +4,11 @@
         "version": "Lua5.3"
     },
     "workspace": {
+        "ignoreDir": [
+            "./test/.scs-root/rom/"
+        ],
         "library": [
-            "./lib/*/"
+            "./api/*/"
         ],
         "workspaceRoots": [
             "./lua/"
