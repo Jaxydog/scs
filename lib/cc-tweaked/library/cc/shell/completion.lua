@@ -190,7 +190,7 @@ function completion.command(shell, text, previous, ...) end
 ---
 --- @param ... nil | table | function The completion function for an argument.
 ---
---- @return fun(shell: table, index: integer, text: string, previous: string[]): string[]
+--- @return cc.shell.CompletionFunction completionFunction The completion function.
 function completion.build(...) end
 
 return completion

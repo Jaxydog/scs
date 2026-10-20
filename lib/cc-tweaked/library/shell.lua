@@ -276,7 +276,7 @@ function shell.completeProgram(program) end
 --- - New in version 1.74
 ---
 --- @param program string The path to the program. This should be an absolute path without the leading `/`.
---- @param complete cc.shell.CompletionFunction The completion function.
+--- @param complete cc.shell.CompletionFunction | nil The completion function.
 ---
 --- @see read()
 --- @see shell.complete()
