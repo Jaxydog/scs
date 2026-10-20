@@ -13,4 +13,5 @@
 --- | cc.peripheral.Peripheral.Monitor A monitor peripheral.
 --- | cc.peripheral.Peripheral.Printer A printer peripheral.
 --- | cc.peripheral.Peripheral.Speaker A speaker peripheral.
+--- | cc.peripheral.Peripheral.TurtleStorage A turtle storage peripheral.
 --- | table An unknown peripheral type.
