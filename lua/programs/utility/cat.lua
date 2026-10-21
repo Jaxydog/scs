@@ -14,6 +14,12 @@ if #arguments == 0 then
     return
 end
 
+if not disablePagination:get() then
+    shell.run('page', arguments[1])
+
+    return
+end
+
 local path = shell.resolve(arguments[1])
 
 if not fs.exists(path) then
@@ -26,10 +32,4 @@ local file = assert(fs.open(path, 'r'))
 local contents = file.readAll() or ''
 file.close()
 
-if disablePagination:get() then
-    print(contents)
-else
-    local _, y = term.getCursorPos()
-
-    textutils.pagedPrint(contents, y - 2)
-end
+print(contents)
