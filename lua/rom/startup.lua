@@ -29,8 +29,22 @@ shell.setPath(path)
 
 local complete = require('cc.shell.completion')
 
-shell.setCompletionFunction(fs.combine(root, '/programs/utility/cat.lua'), complete.build(complete.file))
-shell.setCompletionFunction(fs.combine(root, '/programs/utility/page.lua'), complete.build(complete.file))
+--- Registers a completion function for the given program, throwing an error if it does not exist.
+---
+--- @param program string The program name.
+--- @param completion cc.shell.CompletionFunction The completion function.
+local function registerCompletionFunction(program, completion)
+    local programPath = fs.combine(root, ('/programs/%s.lua'):format(program))
+
+    if not fs.exists(programPath) then
+        error(('unknown program %s'):format(program), 2)
+    end
+
+    shell.setCompletionFunction(programPath, completion)
+end
+
+registerCompletionFunction('utility/cat', complete.build(complete.file))
+registerCompletionFunction('utility/page', complete.build(complete.file))
 
 _G.scs = {
     settings = require('rom.settings'),
