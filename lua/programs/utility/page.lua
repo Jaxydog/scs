@@ -244,6 +244,8 @@ end
 
 --- Search for the current buffer.
 local function search()
+    if state.search.buffer == '' then return {} end
+
     --- @type { x: integer, y: integer, length: integer } []
     local results = {}
 
@@ -292,7 +294,7 @@ local function handleKey()
         function() data = { os.pullEvent('key_up') } end
     )
 
-    --- @type cc.os.Event, integer, boolean
+    --- @type cc.os.Event, integer
     local event, key = table.unpack(data)
     local down = event == 'key'
 
@@ -316,7 +318,7 @@ local function handleKey()
             state.search.current = 1
 
             if #state.search.results > 0 then
-                local position = state.search.results[1]
+                local position = assert(state.search.results[1])
 
                 relocate(position.x, position.y, position.length)
             end
