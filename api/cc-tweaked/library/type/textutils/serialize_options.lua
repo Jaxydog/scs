@@ -6,7 +6,7 @@
 ---
 --- @class cc.textutils.SerializeOptions
 ---
---- @param compact? boolean Do not emit indentation and other whitespace between terms.
+--- @field compact? boolean Do not emit indentation and other whitespace between terms.
 ---
---- @param allow_repetitions? boolean Relax the check for recursive tables, allowing them to appear multiple times
+--- @field allow_repetitions? boolean Relax the check for recursive tables, allowing them to appear multiple times
 --- (as long as tables do not appear inside themselves).
