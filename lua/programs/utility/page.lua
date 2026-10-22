@@ -243,17 +243,18 @@ local function display()
 end
 
 --- Search for the current buffer.
+---
+--- @return { x: integer, y: integer, length: integer } [] results The search results.
 local function search()
     if state.search.buffer == '' then return {} end
 
-    --- @type { x: integer, y: integer, length: integer } []
     local results = {}
 
     for y, line in ipairs(state.lines) do
         local initial = 0 --- @as integer?
 
         while initial ~= nil do
-            local start, stop = line:find(state.search.buffer, initial)
+            local start, stop = line:find(state.search.buffer, initial, true)
 
             if start ~= nil then
                 --- @cast stop -?
@@ -318,7 +319,7 @@ local function handleKey()
             state.search.current = 1
 
             if #state.search.results > 0 then
-                local position = assert(state.search.results[1])
+                local position = state.search.results[1]
 
                 relocate(position.x, position.y, position.length)
             end
