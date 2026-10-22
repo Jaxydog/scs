@@ -342,6 +342,7 @@ local function handleKey()
         state.search.capture = true
         state.search.buffer = ''
         state.search.results = {}
+        state.highlight.length = 0
         return
     end
 
